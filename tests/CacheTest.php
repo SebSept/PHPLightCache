@@ -22,12 +22,22 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * Sets up the fixture.
      * This method is called before a test is executed.
      * 
+     * - create cache dir if doesn't exists
      * - Creates cache object
      * - Checks 'testing.txt' is not existing
      * - create a non writable dir
      */
     protected function setUp() 
     {
+        // set env debug mode
+        $_ENV['debug'] = true;
+        // create cache dir if doesn't exists
+        if(!is_dir(self::CACHEDIR))
+        {
+            $nd = self::CACHEDIR;
+            `mkdir $nd`;
+        }
+        // Creates cache object
         $this->cache = new Cache( array('cacheDirectory' => self::CACHEDIR) );
         $this->cache->setPathDepth(5);
         
@@ -143,6 +153,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testSet_onNotWritableCacheDir() 
     {
+        $_ENV['debug'] = false; // must not raise exception but return false
         $this->cache->setCacheDirectory(self::NONWRITABLEDIR);
         $this->assertFalse($this->cache->set('mycacheid','thecontent'));
     }

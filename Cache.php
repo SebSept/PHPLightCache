@@ -152,7 +152,12 @@ class Cache
      */
     protected function createCacheDir($cachePath)
     {
-        return is_dir($cachePath) || @mkdir( $cachePath, 0775, true );
+        $is_dir = is_dir($cachePath);
+        $mkdir = @mkdir( $cachePath, 0775, true );
+        if(isset($_ENV['debug']) && $_ENV['debug'] && !$is_dir && !$mkdir )
+            throw new \Exception('Failled to create dir '.$cachePath);
+        
+        return $is_dir || $mkdir;
     }
 
     /**
@@ -242,7 +247,12 @@ class Cache
     public function set($cacheId, $contents)
     {
 	$cachePath = $this->getCachePath($cacheId);
-        return $this->createCacheDir( dirname($cachePath) ) && ( @file_put_contents($cachePath, $contents) !== false );
+        $create_dir = $this->createCacheDir( dirname($cachePath) );
+        $create_file = ( @file_put_contents($cachePath, $contents) !== false );
+        if(isset($_ENV['debug']) && $_ENV['debug'] && !$create_file)
+            throw new \Exception('Failled to create file '.$cachePath);
+            
+        return $create_dir && $create_file;
     }
 
     /**
