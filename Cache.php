@@ -228,14 +228,6 @@ class Cache
     }
 
     /**
-     * Alias for exists
-     */
-    public function check($filename, array $conditions = array())
-    {
-        return $this->exists($filename, $conditions);
-    }
-
-    /**
      * Caches contents
      * 
      * @todo throw Exception or display error if in debug mode (?)
