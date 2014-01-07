@@ -145,6 +145,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testSet_onWritableCacheDir() 
     {
         $this->assertTrue($this->cache->set('mycacheid','thecontent'));
+        return $this->cache;
     }
     
     /**
@@ -217,6 +218,40 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->cache->exists('testing.txt', $conditions));
     }
    
+    /**
+     * @covers Gregwar\Cache\Cache::get
+     * @covers Gregwar\Cache\Cache::exists
+     * @covers Gregwar\Cache\Cache::checkConditions
+     */
+    public function testGet_onDefined() 
+    {
+        $this->cache->set('testing.txt', 'content');
+        $this->assertEquals('content', $this->cache->get('testing.txt'));
+    }
+    
+   /**
+     * @covers Gregwar\Cache\Cache::get
+     * @covers Gregwar\Cache\Cache::exists
+     * @covers Gregwar\Cache\Cache::checkConditions
+     */
+    public function testGet_onUndefined() 
+    {
+        $this->assertNull( $this->cache->get('undefined'));
+    }
+    
+    /**
+     * @covers Gregwar\Cache\Cache::get
+     * @covers Gregwar\Cache\Cache::exists
+     * @covers Gregwar\Cache\Cache::checkConditions
+     * Condition make the cache expired, must return NULL
+     */
+    public function testGet_onDefined_withConditions() 
+    {
+        $this->cache->set('testing.txt', 'content');
+        $conditions = array('max-age' => 0);
+        $this->assertNull( $this->cache->get('testing.txt', $conditions) );
+    }
+    
     // --- original tests from GregWar
     /**
      * Testing that file names are good

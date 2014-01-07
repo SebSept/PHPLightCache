@@ -257,13 +257,22 @@ class Cache
 
     /**
      * Get data from the cache
+     * 
+     * @param string $cacheId
+     * @param array $conditions Additionnal conditions, overrides defaults @see Gregwar\Cache\Cache::$conditions
      */
-    public function get($filename, array $conditions = array())
+    public function get($cacheId, array $conditions = array())
     {
-	if ($this->exists($filename, $conditions)) {
-	    return file_get_contents($this->getCachePath($filename, true));
-	} else {
-	    return null;
+        // merge passed $conditions with currents
+        $conditions = array_merge($this->conditions, $conditions);
+        
+	if ($this->exists($cacheId, $conditions)) 
+        {
+	    return file_get_contents($this->getCachePath($cacheId, true));
+	} 
+        else 
+        {
+	    return NULL;
 	}
     }
 
