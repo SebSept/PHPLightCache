@@ -143,15 +143,16 @@ class Cache
         return $this->getCacheDirectory() . '/' . $path;
     }
     
-    protected function createDir()
+    
+    /**
+     * Create the directories where to create $cachePath
+     * 
+     * @param string $cacheFile
+     * @return bool
+     */
+    protected function createCacheDir($cachePath)
     {
-        trigger_error('implement me');
-        die('implement');
-        // moved from getCacheFile / getCachePath
-                $actualDir = $this->getActualCacheDirectory() . '/' . $path;
-        if ($mkdir && !is_dir($actualDir)) {
-	    mkdir($actualDir, 0755, true);
-	}
+        return is_dir($cachePath) || @mkdir( dirname($cachePath), 0775, true );
     }
 
     /**
@@ -238,18 +239,10 @@ class Cache
      * @param string $contents contents to cache
      * @return bool
      */
-    public function set($cache_id, $contents)
+    public function set($cacheId, $contents)
     {
-	$cachePath = $this->getCachePath($cache_id);
-        try {
-            $this->createDir($cachePath);
-            file_put_contents($cachePath, $contents);
-            return $this;
-        }
-        catch(Exception $e)
-        {
-            return false;
-        }
+	$cachePath = $this->getCachePath($cacheId);
+        return $this->createCacheDir( dirname($cachePath) ) && ( @file_put_contents($cachePath, $contents) !== false );
     }
 
     /**
