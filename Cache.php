@@ -147,12 +147,12 @@ class Cache
     /**
      * Create the directories where to create $cachePath
      * 
-     * @param string $cacheFile
+     * @param string $cachePath directory where to put file 
      * @return bool
      */
     protected function createCacheDir($cachePath)
     {
-        return is_dir($cachePath) || @mkdir( dirname($cachePath), 0775, true );
+        return is_dir($cachePath) || @mkdir( $cachePath, 0775, true );
     }
 
     /**
