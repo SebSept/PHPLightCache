@@ -122,24 +122,24 @@ class Cache
      * Gets the cache file path
      *
      * @todo refactor/recode
-     * @param string $cache_id cache file name
+     * @param string $cacheId cache file name
      */
-    public function getCachePath($cache_id)
+    public function getCachePath($cacheId)
     {
 	$path = array();
 
 	// Getting the length of the filename before the extension
-	$parts = explode('.', $cache_id);
+	$parts = explode('.', $cacheId);
 	$len = strlen($parts[0]);
 
 	for ($i=0; $i<min($len, $this->pathDepth); $i++) {
-	    $path[] = $cache_id[$i];
+	    $path[] = $cacheId[$i];
 
         }
 
 	$path = implode('/', $path);
 
-	$path .= '/' . $cache_id;
+	$path .= '/' . $cacheId;
         return $this->getCacheDirectory() . '/' . $path;
     }
     
@@ -234,8 +234,9 @@ class Cache
      * 
      * @todo throw Exception or display error if in debug mode (?)
      * 
-     * @param string $cache_id 
+     * @param string $cacheId 
      * @param string $contents contents to cache
+     * @return bool
      */
     public function set($cache_id, $contents)
     {
