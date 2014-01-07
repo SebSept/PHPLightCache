@@ -11,6 +11,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     const CACHEDIR = '/tmp/cacheTests';
     const NONEXISTINGDIR = '/dev/null/doenstexist';
     const EXISTINGDIR = '/tmp';
+    const NONWRITABLEDIR = '/tmp/nonWritable';
 
     /**
      * @var Cache
@@ -23,13 +24,23 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * 
      * - Creates cache object
      * - Checks 'testing.txt' is not existing
+     * - create a non writable dir
      */
     protected function setUp() 
     {
         $this->cache = new Cache( array('cacheDirectory' => self::CACHEDIR) );
         $this->cache->setPathDepth(5);
         
+        // Checks 'testing.txt' is not existing
         $this->assertFalse($this->cache->exists('testing.txt'));
+        
+        // create a non writable dir
+        $nwd = self::NONWRITABLEDIR;
+        if(!is_dir(self::NONWRITABLEDIR))
+        {
+            `mkdir $nwd`;
+        }
+        `chmod 555 $nwd`;
     }
     
     /**
@@ -110,6 +121,25 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $this->cache->setCacheDirectory(self::NONEXISTINGDIR);
         $this->assertEquals(self::CACHEDIR, $this->cache->getCacheDirectory());
+    }
+    
+    /**
+     * @covers Gregwar\Cache\Cache::set
+     * @covers Gregwar\Cache\Cache::createCacheDir
+     */
+    public function testSet_onWritableCacheDir() 
+    {
+        $this->assertTrue($this->cache->set('mycacheid','thecontent'));
+    }
+    
+    /**
+     * @covers Gregwar\Cache\Cache::set
+     * @covers Gregwar\Cache\Cache::createCacheDir
+     */
+    public function testSet_onNotWritableCacheDir() 
+    {
+        $this->cache->setCacheDirectory(self::NONWRITABLEDIR);
+        $this->assertFalse($this->cache->set('mycacheid','thecontent'));
     }
     
     // --- original tests from GregWar
