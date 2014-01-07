@@ -39,7 +39,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         }
         // Creates cache object
         $this->cache = new Cache( array('cacheDirectory' => self::CACHEDIR) );
-        $this->cache->setPathDepth(5);
         
         // Checks 'testing.txt' is not existing
         if($this->cache->exists('testing.txt'))
