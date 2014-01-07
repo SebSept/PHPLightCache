@@ -106,17 +106,6 @@ class Cache
         return $this;
     }
 
-    /**
-     * Creates a directory
-     *
-     * @param $directory, the target directory
-     */
-    protected function mkdir($directory)
-    {
-        if (!is_dir($directory)) {
-            @mkdir($directory, 0755, true);
-        }
-    }
 
     /**
      * Gets the cache file path
