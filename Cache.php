@@ -271,6 +271,7 @@ class Cache
     /**
      * check the $cacheId is valid
      * 
+     * @codeCoverageIgnore
      * @throws Exception if param $throwException && param $cacheId doesn't match self::valid_cache_id_regexp
      * @return bool
      */

@@ -149,6 +149,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Gregwar\Cache\Cache::set
      * @covers Gregwar\Cache\Cache::createCacheDir
+     * @covers Gregwar\Cache\Cache::checkValidCacheId
      */
     public function testSet_onWritableCacheDir() 
     {
@@ -158,6 +159,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Gregwar\Cache\Cache::set
      * @covers Gregwar\Cache\Cache::createCacheDir
+     * @covers Gregwar\Cache\Cache::checkValidCacheId
      * @expectedException Exception
      * Must throw on exception if chars others than alpha and digits
      */
@@ -169,6 +171,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Gregwar\Cache\Cache::set
      * @covers Gregwar\Cache\Cache::createCacheDir
+     * @covers Gregwar\Cache\Cache::checkValidCacheId
      */
     public function testSet_onNotWritableCacheDir() 
     {
