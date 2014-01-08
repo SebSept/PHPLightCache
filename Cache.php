@@ -57,7 +57,7 @@ class Cache
         // merge default options with passed
         $this->options = array_merge($this->options, $options);
 
-	$this->cacheDirectory = $this->options['cacheDirectory'];
+	$this->setCacheDirectory( $this->options['cacheDirectory']);
         $this->conditions = $this->options['conditions'];
     }
 
