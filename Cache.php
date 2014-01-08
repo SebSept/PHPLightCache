@@ -67,11 +67,9 @@ class Cache
     }
 
     /**
-     * Sets the cache directory
+     * Sets the cache directory (if exists)
      * 
-     * Set the cache directory if exists
-     *
-     * @todo also check that dir is writable 
+     * @todo also check that dir is writable (?)
      * 
      * @param string $cacheDirectory the cache directory. Without ending '/'
      * @return bool
@@ -99,7 +97,7 @@ class Cache
     /**
      * Set directories Path max depth
      *
-     * @todo add min and max constants to validate size value
+     * @todo add min and max constants to validate size value + return bool
      * @param int $size path max depth
      * @return $this
      */
@@ -224,13 +222,16 @@ class Cache
     /**
      * Get data from the cache
      * 
+     * @todo better throw exception if invalid cacheId ?
+     * 
      * @param string $cacheId
      * @param array $conditions Additionnal conditions, overrides defaults @see Gregwar\Cache\Cache::$conditions
+     * @return mixed string|NULL NULL if cache doesn't exists in this conditions, string if exists
      */
     public function get($cacheId, array $conditions = array())
     {
         if(!$this->checkValidCacheId($cacheId, false))
-                return false;
+                return NULL;
         
         // merge passed $conditions with currents
         $conditions = array_merge($this->conditions, $conditions);
@@ -248,9 +249,9 @@ class Cache
     /**
      * Deletes cache
      * 
+     * @throws Exception if failed to delete cache file
      * @param type $cacheID
-     * @return boolean
-     * @throws Exception
+     * @return bool
      */
     public function delete($cacheId)
     {
