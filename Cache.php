@@ -199,7 +199,7 @@ class Cache
      */
     public function exists($filename, array $conditions = array())
     {
-        $cacheFile = $this->getCachePath($filename, true);
+        $cacheFile = $this->getCachePath($filename);
 
 	return $this->checkConditions($cacheFile, $conditions);
     }
@@ -241,7 +241,7 @@ class Cache
         
 	if ($this->exists($cacheId, $conditions)) 
         {
-	    return file_get_contents($this->getCachePath($cacheId, true));
+	    return file_get_contents($this->getCachePath($cacheId));
 	} 
         else 
         {
