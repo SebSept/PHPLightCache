@@ -172,7 +172,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testExits_onNoCondition()
     {
-        $this->cache->set('testing', 'content');
+        $this->cache->set('testing', 'testExits_onNoCondition');
         $this->assertTrue($this->cache->exists('testing'));
     }
     
@@ -184,7 +184,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $conditions = array('max-age' => 60); // 60 seconds
         
-        $this->cache->set('testing', 'content');
+        $this->cache->set('testing', 'testExits_onMaxAgeValid');
         $this->assertTrue($this->cache->exists('testing', $conditions));
     }
     
@@ -196,7 +196,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $conditions = array('max-age' => 1); // 1 second
         
-        $this->cache->set('testing', 'content');
+        $this->cache->set('testing', 'testExits_onMaxAgeExpired');
         sleep(2);
         $this->assertFalse($this->cache->exists('testing', $conditions));
     }
@@ -209,7 +209,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $conditions = array('max-age' => -1);
         
-        $this->cache->set('testing', 'content');
+        $this->cache->set('testing', 'testExits_onMaxAgeAlwaysExpired');
         $this->assertFalse($this->cache->exists('testing', $conditions));
     }
     
@@ -222,7 +222,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $conditions = array('max-age' => 0);
         
-        $this->cache->set('testing', 'content');
+        $this->cache->set('testing', 'testExits_onMaxAgeZero');
         $this->assertFalse($this->cache->exists('testing', $conditions));
     }
    
@@ -233,8 +233,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet_onDefined() 
     {
-        $this->cache->set('testing', 'content');
-        $this->assertEquals('content', $this->cache->get('testing'));
+        $this->cache->set('testing', 'testGet_onDefined');
+        $this->assertEquals('testGet_onDefined', $this->cache->get('testing'));
     }
     
    /**
@@ -255,7 +255,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet_onDefined_withConditions() 
     {
-        $this->cache->set('testing', 'content');
+        $this->cache->set('testing', 'testGet_onDefined_withConditions');
         $conditions = array('max-age' => 0);
         $this->assertNull( $this->cache->get('testing', $conditions) );
     }
@@ -270,7 +270,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         // initial_conditions : no cache
         $initial_conditions = array('conditions' => array( 'max-age' => 0) );
         $cache = new Cache($initial_conditions);
-        $cache->set('testing', 'content');
+        $cache->set('testing', 'onConfigPassed_condition');
         $this->assertFalse($cache->exists('testing'));
     }
     
