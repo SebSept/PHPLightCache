@@ -59,7 +59,6 @@ class Cache
      */
     public function __construct($options = array())
     {
-        // merge default options with passed
         $this->options = array_merge($this->options, $options);
 
 	$this->setCacheDirectory( $this->options['cacheDirectory']);
@@ -156,14 +155,12 @@ class Cache
      * @param array $conditions an array of conditions to check, overrides current conditions
      * @return bool
      */
-    protected function checkConditions($cacheFile, array $conditions = array())
+    protected function checkConditions($cacheFile, array $conditions = [])
     {
-        // Implicit condition: the cache file should exist
         if (!file_exists($cacheFile)) {
 	    return false;
 	}
 
-        // merge passed $conditions with currents
         $conditions = array_merge($this->conditions, $conditions);
         
 	foreach ($conditions as $type => $value) {
@@ -190,9 +187,8 @@ class Cache
      * @param array $conditions
      * @return bool
      */
-    public function exists($cacheId, array $conditions = array())
+    public function exists($cacheId, array $conditions = [])
     {
-        // merge passed $conditions with currents
         $conditions = array_merge($this->conditions, $conditions);        
         $cacheFile = $this->getCachePath($cacheId);
 	return $this->checkConditions($cacheFile, $conditions);
@@ -228,12 +224,11 @@ class Cache
      * @param array $conditions Additionnal conditions, overrides defaults @see Gregwar\Cache\Cache::$conditions
      * @return mixed string|NULL NULL if cache doesn't exists in this conditions, string if exists
      */
-    public function get($cacheId, array $conditions = array())
+    public function get($cacheId, array $conditions = [])
     {
         if(!$this->checkValidCacheId($cacheId, false))
                 return NULL;
         
-        // merge passed $conditions with currents
         $conditions = array_merge($this->conditions, $conditions);
         
 	if ($this->exists($cacheId, $conditions)) 
