@@ -14,18 +14,17 @@ class Cache
 {
     /**
      * Cache directory
+     * @var string where is the cache dir - absolute path - must exist
      */
     protected $cacheDirectory;
 
     /**
-     * directories size max depth
+     * directories max depth
      *
      * For instance, if the file is helloworld.txt and the depth size is
      * 5, the cache file will be: h/e/l/l/o/helloworld.txt
      *
-     * This is useful to avoid reaching a too large number of files into the 
-     * cache system directories
-     * @var int $pathDepth
+     * @var int $pathDepth directories max depth
      */
     protected $pathDepth = 5;
 
@@ -49,7 +48,8 @@ class Cache
     /**
      * Constructs the cache system
      * 
-     * Options param can be 'cacheDirectory' and 'conditions' @see Gregwar\Cache\Cache::$conditions
+     * Options param can be 'cacheDirectory' (string) and 'conditions' @see Gregwar\Cache\Cache::$conditions
+     * @todo better doc
      * @param array $options 
      */
     public function __construct($options = array())
@@ -200,8 +200,7 @@ class Cache
     /**
      * Caches contents
      * 
-     * @todo throw Exception or display error if in debug mode (?)
-     * 
+     * @throws Exception if 
      * @param string $cacheId 
      * @param string $contents contents to cache
      * @return bool
