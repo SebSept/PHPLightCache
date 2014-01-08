@@ -10,7 +10,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 {
     const CACHEDIR = '/tmp/cacheTests';
     const NONEXISTINGDIR = '/dev/null/doenstexist';
-    const EXISTINGDIR = '/tmp';
+    const EXISTINGDIR = '/tmp/another';
     const NONWRITABLEDIR = '/tmp/nonWritable';
 
     /**
@@ -22,7 +22,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * Sets up the fixture.
      * This method is called before a test is executed.
      * 
-     * - create cache dir if doesn't exists
+     * - create cache dir if doesn't exists : CACHEDIR & EXISTINGDIR
      * - Creates cache object
      * - Checks 'testing' is not existing
      * - create a non writable dir
@@ -31,12 +31,21 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         // set env debug mode - set to true only to find problem
         $_ENV['debug'] = false;
+        
         // create cache dir if doesn't exists
         if(!is_dir(self::CACHEDIR))
         {
             $nd = self::CACHEDIR;
             `mkdir $nd`;
         }
+
+        // same for EXISTINGDIR
+        if(!is_dir(self::EXISTINGDIR))
+        {
+            $nd = self::EXISTINGDIR;
+            `mkdir $nd`;
+        }
+        
         // Creates cache object
         $this->cache = new Cache( array('cacheDirectory' => self::CACHEDIR) );
         
@@ -285,6 +294,16 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $initial_conditions = array('cacheDirectory' => self::EXISTINGDIR );
         $cache = new Cache($initial_conditions);
         $this->assertEquals(self::EXISTINGDIR, $cache->getCacheDirectory());
+    }
+    /**
+     * executed after each test to clear environnement
+     */
+    protected function tearDown()
+    {
+        // remove cache dir created in test
+        $cd = $this->cache->getCacheDirectory('acache');
+        `chmod +w $cd -R`;
+        `rm -Rf $cd`;
     }
 
 }
