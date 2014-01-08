@@ -29,8 +29,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp() 
     {
-        // set env debug mode
-        $_ENV['debug'] = true;
+        // set env debug mode - set to true only to find problem
+        $_ENV['debug'] = false;
         // create cache dir if doesn't exists
         if(!is_dir(self::CACHEDIR))
         {
@@ -163,7 +163,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testSet_onNotWritableCacheDir() 
     {
-        $_ENV['debug'] = false; // must not raise exception but return false
         $this->cache->setCacheDirectory(self::NONWRITABLEDIR);
         $this->assertFalse($this->cache->set('mycacheid','thecontent'));
     }
@@ -261,106 +260,31 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertNull( $this->cache->get('testing', $conditions) );
     }
     
-    // --- original tests from GregWar
     /**
-     * Testing that file names are good
+     * Check if configuration passed on constuctor is respected : condition max-age
+     * @covers Gregwar\Cache\Cache::__construct()
+     * because of max-age:0 passed in constructor, cache must be considered expired
      */
-//    public function testFileName()
-//    {
-//        $cache = $this->cache;
-//
-//        $cacheDir = $this->getCacheDirectory();
-//        $actualCacheDir = $this->getActualCacheDirectory();
-//        $cacheFile = $cache->getCacheFile('helloworld.txt');
-//        $actualCacheFile = $cache->getCacheFile('helloworld.txt', true);
-//        $this->assertEquals($cacheDir . '/h/e/l/l/o/helloworld.txt', $cacheFile);
-//        $this->assertEquals($actualCacheDir . '/h/e/l/l/o/helloworld.txt', $actualCacheFile);
-//
-//        $cacheFile = $cache->getCacheFile('xy.txt');
-//        $actualCacheFile = $cache->getCacheFile('xy.txt', true);
-//        $this->assertEquals($cacheDir . '/x/y/xy.txt', $cacheFile);
-//        $this->assertEquals($actualCacheDir . '/x/y/xy.txt', $actualCacheFile);
-//    }
-//    
-//    
-//    
-//    /**
-//     * Check if configuration passed on constuctor is respected
-//     * @covers Gregwar\Cache\Cache::__construct()
-//     */
-//    public function testConstuctor_onConfigPassed()
-//    {
-//        // initial_conditions : no cache
-//        $initial_conditions = array('conditions' => array( 'max-age' => 0) );
-//        $cache = new Cache($initial_conditions);
-//        $cache->set('testing.txt', 'content');
-//        $this->assertFalse($cache->exists('testing.txt'));
-//    }
-//    
-//    /**
-//     * Testing the getOrCreate function
-//     */
-//    public function testGetOrCreate()
-//    {
-//        $cache = $this->cache;
-//
-//        $this->assertFalse($cache->exists('testing.txt'));
-//
-//        $data = $cache->getOrCreate('testing.txt', array(), function() {
-//            return 'zebra';
-//        });
-//
-//        $this->assertTrue($cache->exists('testing.txt'));
-//        $this->assertEquals('zebra', $data);
-//
-//        $data = $cache->getOrCreate('testing.txt', array(), function() {
-//            return 'elephant';
-//        });
-//        $this->assertEquals('zebra', $data);
-//    }
-//
-//    /**
-//     * Testing the getOrCreate function with $file=true
-//     */
-//    public function testGetOrCreateFile()
-//    {
-//        $dir = __DIR__;
-//        $cache = $this->cache;
-//
-//        $file = $dir.'/'.$cache->getOrCreateFile('file.txt', array(), function() {
-//            return 'xyz';
-//        });
-//        $file2 = $dir.'/'.$cache->getOrCreate('file.txt', array(), function(){}, true);
-//
-//        $this->assertEquals($file, $file2);
-//        $this->assertTrue(file_exists($file));
-//        $this->assertEquals('xyz', file_get_contents($file));
-//    }
-//
-//    /**
-//     * Testing that the not existing younger file works
-//     */
-//    public function testNotExistingYounger()
-//    {
-//        $cache = $this->cache;
-//
-//        $data = $cache->getOrCreate('testing.txt', array('younger-than'=> 'i-dont-exist'), function() {
-//            return 'some-data';
-//        });
-//
-//        $this->assertEquals('some-data', $data);
-//    }
-//
-//
-//    protected function getActualCacheDirectory()
-//    {
-//        return __DIR__.'/'.$this->getCacheDirectory();
-//    }
-//
-//
-//    public function tearDown()
-//    {
-//        $cacheDirectory = $this->getActualCacheDirectory();
-//        `rm -rf $cacheDirectory`;
-//    }
+    public function testConstuctor_onConfigPassed_condition()
+    {
+        // initial_conditions : no cache
+        $initial_conditions = array('conditions' => array( 'max-age' => 0) );
+        $cache = new Cache($initial_conditions);
+        $cache->set('testing', 'content');
+        $this->assertFalse($cache->exists('testing'));
+    }
+    
+    /**
+     * Check if configuration passed on constuctor is respected : cachedir
+     * @covers Gregwar\Cache\Cache::__construct()
+     * because of max-age:0 passed in constructor, cache must be considered expired
+     */
+    public function testConstuctor_onConfigPassed_cachedir()
+    {
+        // change cache dir
+        $initial_conditions = array('cacheDirectory' => self::EXISTINGDIR );
+        $cache = new Cache($initial_conditions);
+        $this->assertEquals(self::EXISTINGDIR, $cache->getCacheDirectory());
+    }
+
 }

@@ -134,6 +134,8 @@ class Cache
 	$path = implode('/', $path);
 
 	$path .= '/' . $cacheId;
+         if(isset($_ENV['debug']) && $_ENV['debug'])
+             trigger_error('Path : '.$path);
         return $this->getCacheDirectory() . '/' . $path;
     }
     
