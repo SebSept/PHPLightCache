@@ -117,6 +117,7 @@ class Cache
      *
      * @todo refactor/recode
      * @param string $cacheId cache file name
+     * @return string path to cache file
      */
     public function getCachePath($cacheId)
     {
@@ -249,6 +250,24 @@ class Cache
 	}
     }
     
+    /**
+     * Deletes cache
+     * 
+     * @param type $cacheID
+     * @return boolean
+     * @throws Exception
+     */
+    public function delete($cacheId)
+    {
+        $file_path = $this->getCachePath($cacheId);
+        // file doesn't exists : return true
+        if(!file_exists($file_path))
+            return true;
+        if(!@unlink($file_path))
+            throw new \Exception('Failed to delete existing file '.$file_path);
+        return true;
+    }
+
     /**
      * check the $cacheId is valid
      * 

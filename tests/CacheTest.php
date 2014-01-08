@@ -314,8 +314,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testDelete_onExistingCache_NotRemovable()
     {
         $this->cache->set('acache', 'testDelete_onExistingCache_Removable');
-        $path = $this->cache->getCachePath('acache');
-        `chmod -w $path`;
+        // prevent file from being deletable by changing last dir rights
+        $dir = dirname($this->cache->getCachePath('acache'));
+        `chmod -w $dir`;
+        
         $this->cache->delete('acache');
     }
 
