@@ -295,6 +295,39 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $cache = new Cache($initial_conditions);
         $this->assertEquals(self::EXISTINGDIR, $cache->getCacheDirectory());
     }
+    
+    /**
+     * @covers Gregwar\Cache\Cache::delete
+     */
+    public function testDelete_onExistingCache_Removable()
+    {
+        $this->cache->set('acache', 'testDelete_onExistingCache_Removable');
+        $this->assertTrue( $this->cache->delete('acache'));
+        $this->assertNull($this->cache->get('acache'));
+    }
+
+    /**
+     * @covers Gregwar\Cache\Cache::delete
+     * @expectedException Exception
+     * Exception if failed to delete cache
+     */    
+    public function testDelete_onExistingCache_NotRemovable()
+    {
+        $this->cache->set('acache', 'testDelete_onExistingCache_Removable');
+        $path = $this->cache->getCachePath('acache');
+        `chmod -w $path`;
+        $this->cache->delete('acache');
+    }
+
+    /**
+     * @covers Gregwar\Cache\Cache::delete
+     * returns true on non existing cache
+     */    
+    public function testDelete_onNonExistingCache()
+    {
+        $this->assertTrue( $this->cache->delete('acache'));
+    }
+
     /**
      * executed after each test to clear environnement
      */
