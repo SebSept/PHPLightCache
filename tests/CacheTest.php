@@ -24,7 +24,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * 
      * - create cache dir if doesn't exists
      * - Creates cache object
-     * - Checks 'testing.txt' is not existing
+     * - Checks 'testing' is not existing
      * - create a non writable dir
      */
     protected function setUp() 
@@ -40,13 +40,13 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         // Creates cache object
         $this->cache = new Cache( array('cacheDirectory' => self::CACHEDIR) );
         
-        // Checks 'testing.txt' is not existing
-        if($this->cache->exists('testing.txt'))
+        // Checks 'testing' is not existing
+        if($this->cache->exists('testing'))
         {
             $cd = self::CACHEDIR;
             `rm -Rf $cd/*`;
         }
-        $this->assertFalse($this->cache->exists('testing.txt'));
+        $this->assertFalse($this->cache->exists('testing'));
         
         // create a non writable dir
         $nwd = self::NONWRITABLEDIR;
@@ -64,8 +64,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCachePath_onDepthDefault() 
     {
-        $this->AssertEquals(self::CACHEDIR.'/m/y/t/e/s/mytestfile.cache' ,
-                $this->cache->getCachePath('mytestfile.cache') 
+        $this->AssertEquals(self::CACHEDIR.'/m/y/t/e/s/mytestfilecache' ,
+                $this->cache->getCachePath('mytestfilecache') 
                 );
     }
     
@@ -76,8 +76,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testGetCachePath_onDepth3() 
     {
         $this->cache->setPathDepth(3);
-        $this->AssertEquals(self::CACHEDIR.'/m/y/t/mytestfile.cache' ,
-                $this->cache->getCachePath('mytestfile.cache') 
+        $this->AssertEquals(self::CACHEDIR.'/m/y/t/mytestfilecache' ,
+                $this->cache->getCachePath('mytestfilecache') 
                 );
     }
     
@@ -89,8 +89,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testGetCachePath_onDepthInvalid() 
     {
         $this->cache->setPathDepth('stupid val');
-        $this->AssertEquals(self::CACHEDIR.'/m/y/t/e/s/mytestfile.cache' ,
-                $this->cache->getCachePath('mytestfile.cache') 
+        $this->AssertEquals(self::CACHEDIR.'/m/y/t/e/s/mytestfilecache' ,
+                $this->cache->getCachePath('mytestfilecache') 
                 );
     }
     
@@ -144,7 +144,17 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testSet_onWritableCacheDir() 
     {
         $this->assertTrue($this->cache->set('mycacheid','thecontent'));
-        return $this->cache;
+    }
+    
+    /**
+     * @covers Gregwar\Cache\Cache::set
+     * @covers Gregwar\Cache\Cache::createCacheDir
+     * @expectedException Exception
+     * Must throw on exception if chars others than alpha and digits
+     */
+    public function testSet_onCacheIdWithSpecialChars() 
+    {
+        $this->cache->set('?././*y..ac?eid','thecontent!');
     }
     
     /**
@@ -163,8 +173,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testExits_onNoCondition()
     {
-        $this->cache->set('testing.txt', 'content');
-        $this->assertTrue($this->cache->exists('testing.txt'));
+        $this->cache->set('testing', 'content');
+        $this->assertTrue($this->cache->exists('testing'));
     }
     
     /**
@@ -175,8 +185,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $conditions = array('max-age' => 60); // 60 seconds
         
-        $this->cache->set('testing.txt', 'content');
-        $this->assertTrue($this->cache->exists('testing.txt', $conditions));
+        $this->cache->set('testing', 'content');
+        $this->assertTrue($this->cache->exists('testing', $conditions));
     }
     
     /**
@@ -187,9 +197,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $conditions = array('max-age' => 1); // 1 second
         
-        $this->cache->set('testing.txt', 'content');
+        $this->cache->set('testing', 'content');
         sleep(2);
-        $this->assertFalse($this->cache->exists('testing.txt', $conditions));
+        $this->assertFalse($this->cache->exists('testing', $conditions));
     }
     
     /**
@@ -200,8 +210,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $conditions = array('max-age' => -1);
         
-        $this->cache->set('testing.txt', 'content');
-        $this->assertFalse($this->cache->exists('testing.txt', $conditions));
+        $this->cache->set('testing', 'content');
+        $this->assertFalse($this->cache->exists('testing', $conditions));
     }
     
     /**
@@ -213,8 +223,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $conditions = array('max-age' => 0);
         
-        $this->cache->set('testing.txt', 'content');
-        $this->assertFalse($this->cache->exists('testing.txt', $conditions));
+        $this->cache->set('testing', 'content');
+        $this->assertFalse($this->cache->exists('testing', $conditions));
     }
    
     /**
@@ -224,8 +234,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet_onDefined() 
     {
-        $this->cache->set('testing.txt', 'content');
-        $this->assertEquals('content', $this->cache->get('testing.txt'));
+        $this->cache->set('testing', 'content');
+        $this->assertEquals('content', $this->cache->get('testing'));
     }
     
    /**
@@ -246,9 +256,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet_onDefined_withConditions() 
     {
-        $this->cache->set('testing.txt', 'content');
+        $this->cache->set('testing', 'content');
         $conditions = array('max-age' => 0);
-        $this->assertNull( $this->cache->get('testing.txt', $conditions) );
+        $this->assertNull( $this->cache->get('testing', $conditions) );
     }
     
     // --- original tests from GregWar

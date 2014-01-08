@@ -46,6 +46,11 @@ class Cache
     protected $conditions = [];
     
     /**
+     * @var string regular expression to validate cache ids
+     */
+    const valid_cache_id_regexp = '|^[\w\d]{1,255}$|';
+    
+    /**
      * Constructs the cache system
      * 
      * Options param can be 'cacheDirectory' (string) and 'conditions' @see Gregwar\Cache\Cache::$conditions
@@ -207,6 +212,8 @@ class Cache
      */
     public function set($cacheId, $contents)
     {
+        $this->checkValidCacheId($cacheId);
+         
 	$cachePath = $this->getCachePath($cacheId);
         $create_dir = $this->createCacheDir( dirname($cachePath) );
         $create_file = ( @file_put_contents($cachePath, $contents) !== false );
@@ -224,6 +231,9 @@ class Cache
      */
     public function get($cacheId, array $conditions = array())
     {
+        if(!$this->checkValidCacheId($cacheId, false))
+                return false;
+        
         // merge passed $conditions with currents
         $conditions = array_merge($this->conditions, $conditions);
         
@@ -236,5 +246,19 @@ class Cache
 	    return NULL;
 	}
     }
-
+    
+    /**
+     * check the $cacheId is valid
+     * 
+     * @throws Exception if param $throwException && param $cacheId doesn't match self::valid_cache_id_regexp
+     * @return bool
+     */
+    private function checkValidCacheId($cacheId, $throwException = true)
+    {
+        $match = preg_match(self::valid_cache_id_regexp, $cacheId);
+        if($throwException && !$match)
+            throw new \Exception('Invalid cache id : must match the regexp '.self::valid_cache_id_regexp);
+        return $match;
+    }
+           
 }
