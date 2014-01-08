@@ -2,9 +2,11 @@
 
 namespace SebSept\Cache;
 
-
 /**
- * Unit testing for Cache
+ * Unit tests for SebSept\Cache
+ * 
+ * @author Sébastien Monterisi <SebSept@github> - almost all code is now from this author
+ * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
 class CacheTest extends \PHPUnit_Framework_TestCase
 {

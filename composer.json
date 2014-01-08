@@ -1,15 +1,19 @@
 {
-    "name": "gregwar/cache",
+    "name": "sebsept/cache",
     "description": "A lightweight file-system cache system",
     "keywords": ["cache", "caching", "system", "file-system"],
     "license": "MIT",
     "authors": [
         {
+            "name": "Sébastien Monterisi",
+            "email": "sebastienmonterisi@yahoo.fr"
+        },
+        {
             "name": "Gregwar",
             "email": "g.passault@gmail.com"
         }
     ],
-    "target-dir": "Gregwar/Cache",
+    "target-dir": "SebSept/Cache",
     "autoload": {
         "psr-0": {
             "SebSept\\Cache": ""

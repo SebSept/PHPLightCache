@@ -8,6 +8,8 @@ namespace SebSept\Cache;
  * 
  * @author Sébastien Monterisi <SebSept@github> - almost all code is now from this author
  * @author Gregwar <g.passault@gmail.com> 
+ * 
+ * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
 class Cache
 {
