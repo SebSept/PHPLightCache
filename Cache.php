@@ -1,14 +1,13 @@
 <?php
 
-namespace Gregwar\Cache;
+namespace SebSept\Cache;
 
 /**
  * A cache system based on files
  *
- * @todo validate cache_id with regexp
  * 
- * @author Sébastien Monterisi <SebSept@github>
- * @author Gregwar <g.passault@gmail.com>
+ * @author Sébastien Monterisi <SebSept@github> - almost all code is now from this author
+ * @author Gregwar <g.passault@gmail.com> 
  */
 class Cache
 {
@@ -53,7 +52,7 @@ class Cache
     /**
      * Constructs the cache system
      * 
-     * Options param can be 'cacheDirectory' (string) and 'conditions' @see Gregwar\Cache\Cache::$conditions
+     * Options param can be 'cacheDirectory' (string) and 'conditions' @see SebSept\Cache\Cache::$conditions
      * @todo better doc
      * @param array $options 
      */
@@ -221,7 +220,7 @@ class Cache
      * @todo better throw exception if invalid cacheId ?
      * 
      * @param string $cacheId
-     * @param array $conditions Additionnal conditions, overrides defaults @see Gregwar\Cache\Cache::$conditions
+     * @param array $conditions Additionnal conditions, overrides defaults @see SebSept\Cache\Cache::$conditions
      * @return mixed string|NULL NULL if cache doesn't exists in this conditions, string if exists
      */
     public function get($cacheId, array $conditions = [])

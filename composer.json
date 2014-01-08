@@ -12,7 +12,7 @@
     "target-dir": "Gregwar/Cache",
     "autoload": {
         "psr-0": {
-            "Gregwar\\Cache": ""
+            "SebSept\\Cache": ""
         }
     }
 }

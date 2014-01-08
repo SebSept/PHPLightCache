@@ -1,6 +1,6 @@
 <?php
 
-namespace Gregwar\Cache;
+namespace SebSept\Cache;
 
 
 /**
@@ -67,8 +67,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::getCachePath
-     * @covers Gregwar\Cache\Cache::setPathDepth
+     * @covers SebSept\Cache\Cache::getCachePath
+     * @covers SebSept\Cache\Cache::setPathDepth
      * Default depth supposed to be 5
      */
     public function testGetCachePath_onDepthDefault() 
@@ -79,8 +79,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::getCachePath
-     * @covers Gregwar\Cache\Cache::setPathDepth
+     * @covers SebSept\Cache\Cache::getCachePath
+     * @covers SebSept\Cache\Cache::setPathDepth
      */
     public function testGetCachePath_onDepth3() 
     {
@@ -91,8 +91,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::getCachePath
-     * @covers Gregwar\Cache\Cache::setPathDepth
+     * @covers SebSept\Cache\Cache::getCachePath
+     * @covers SebSept\Cache\Cache::setPathDepth
      * Default depth will be default, 5
      */
     public function testGetCachePath_onDepthInvalid() 
@@ -104,7 +104,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::setCacheDirectory
+     * @covers SebSept\Cache\Cache::setCacheDirectory
      */
     public function testSetCacheDirectory_onNonExistingDir() 
     {
@@ -112,7 +112,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::setCacheDirectory
+     * @covers SebSept\Cache\Cache::setCacheDirectory
      */
     public function testSetCacheDirectory_onExistingDir()
     {
@@ -120,7 +120,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gregwar\Cache\Cache::getCacheDirectory
+     * @covers SebSept\Cache\Cache::getCacheDirectory
      */
     public function testGetCacheDirectory_onDefault() 
     {
@@ -128,7 +128,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::getCacheDirectory
+     * @covers SebSept\Cache\Cache::getCacheDirectory
      */
     public function testGetCacheDirectory_onChangedExisting() 
     {
@@ -137,7 +137,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::getCacheDirectory
+     * @covers SebSept\Cache\Cache::getCacheDirectory
      * dir must not be changed, equals to default
      */
     public function testGetCacheDirectory_onChangedNonExisting() 
@@ -147,9 +147,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::set
-     * @covers Gregwar\Cache\Cache::createCacheDir
-     * @covers Gregwar\Cache\Cache::checkValidCacheId
+     * @covers SebSept\Cache\Cache::set
+     * @covers SebSept\Cache\Cache::createCacheDir
+     * @covers SebSept\Cache\Cache::checkValidCacheId
      */
     public function testSet_onWritableCacheDir() 
     {
@@ -157,9 +157,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::set
-     * @covers Gregwar\Cache\Cache::createCacheDir
-     * @covers Gregwar\Cache\Cache::checkValidCacheId
+     * @covers SebSept\Cache\Cache::set
+     * @covers SebSept\Cache\Cache::createCacheDir
+     * @covers SebSept\Cache\Cache::checkValidCacheId
      * @expectedException Exception
      * Must throw on exception if chars others than alpha and digits
      */
@@ -169,9 +169,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::set
-     * @covers Gregwar\Cache\Cache::createCacheDir
-     * @covers Gregwar\Cache\Cache::checkValidCacheId
+     * @covers SebSept\Cache\Cache::set
+     * @covers SebSept\Cache\Cache::createCacheDir
+     * @covers SebSept\Cache\Cache::checkValidCacheId
      */
     public function testSet_onNotWritableCacheDir() 
     {
@@ -180,7 +180,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::exists
      */
     public function testExits_onNoCondition()
     {
@@ -189,7 +189,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::exists
      * Data should be cached
      */
     public function testExits_onMaxAgeValid()
@@ -201,7 +201,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::exists
      * Cache expired
      */
     public function testExits_onMaxAgeExpired()
@@ -214,7 +214,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::exists
      * Cache expired - -1 second
      */
     public function testExits_onMaxAgeAlwaysExpired()
@@ -226,7 +226,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::exists
      * Cache expired - 0 second
      * 0 second proprably means 'no cache'
      */
@@ -239,9 +239,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
    
     /**
-     * @covers Gregwar\Cache\Cache::get
-     * @covers Gregwar\Cache\Cache::exists
-     * @covers Gregwar\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::get
+     * @covers SebSept\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::checkConditions
      */
     public function testGet_onDefined() 
     {
@@ -250,9 +250,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
    /**
-     * @covers Gregwar\Cache\Cache::get
-     * @covers Gregwar\Cache\Cache::exists
-     * @covers Gregwar\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::get
+     * @covers SebSept\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::checkConditions
      */
     public function testGet_onUndefined() 
     {
@@ -260,9 +260,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::get
-     * @covers Gregwar\Cache\Cache::exists
-     * @covers Gregwar\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::get
+     * @covers SebSept\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::checkConditions
      * Condition make the cache expired, must return NULL
      */
     public function testGet_onDefined_withConditions() 
@@ -274,7 +274,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     
     /**
      * Check if configuration passed on constuctor is respected : condition max-age
-     * @covers Gregwar\Cache\Cache::__construct()
+     * @covers SebSept\Cache\Cache::__construct()
      * because of max-age:0 passed in constructor, cache must be considered expired
      */
     public function testConstuctor_onConfigPassed_condition()
@@ -288,7 +288,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     
     /**
      * Check if configuration passed on constuctor is respected : cachedir
-     * @covers Gregwar\Cache\Cache::__construct()
+     * @covers SebSept\Cache\Cache::__construct()
      * because of max-age:0 passed in constructor, cache must be considered expired
      */
     public function testConstuctor_onConfigPassed_cachedir()
@@ -300,7 +300,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Gregwar\Cache\Cache::delete
+     * @covers SebSept\Cache\Cache::delete
      */
     public function testDelete_onExistingCache_Removable()
     {
@@ -310,7 +310,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gregwar\Cache\Cache::delete
+     * @covers SebSept\Cache\Cache::delete
      * @expectedException Exception
      * Exception if failed to delete cache
      */    
@@ -325,7 +325,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gregwar\Cache\Cache::delete
+     * @covers SebSept\Cache\Cache::delete
      * returns true on non existing cache
      */    
     public function testDelete_onNonExistingCache()
