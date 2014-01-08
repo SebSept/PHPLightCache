@@ -186,16 +186,17 @@ class Cache
     }
 
     /**
-     * Checks if the targt filename exists in the cache and if the conditions
-     * are respected
+     * Checks if cacheID exists in conditions param
      *
-     * @param $filename the filename 
-     * @param $conditions the conditions to respect
+     * @param string $cacheId
+     * @param array $conditions
+     * @return bool
      */
-    public function exists($filename, array $conditions = array())
+    public function exists($cacheId, array $conditions = array())
     {
-        $cacheFile = $this->getCachePath($filename);
-
+        // merge passed $conditions with currents
+        $conditions = array_merge($this->conditions, $conditions);        
+        $cacheFile = $this->getCachePath($cacheId);
 	return $this->checkConditions($cacheFile, $conditions);
     }
 
