@@ -115,25 +115,19 @@ class Cache
     /**
      * Gets the cache file path
      *
-     * @todo refactor/recode
      * @param string $cacheId cache file name
      * @return string path to cache file
      */
     public function getCachePath($cacheId)
     {
+        $this->checkValidCacheId($cacheId);
 	$path = array();
 
-	// Getting the length of the filename before the extension
-	$parts = explode('.', $cacheId);
-	$len = strlen($parts[0]);
-
-	for ($i=0; $i<min($len, $this->pathDepth); $i++) {
+	for ($i=0; $i<min(strlen($cacheId), $this->pathDepth); $i++) 
+        {
 	    $path[] = $cacheId[$i];
-
         }
-
 	$path = implode('/', $path);
-
 	$path .= '/' . $cacheId;
          if(isset($_ENV['debug']) && $_ENV['debug'])
              trigger_error('Path : '.$path);
