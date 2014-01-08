@@ -175,25 +175,6 @@ class Cache
                     return false;
                 }
 		break;
-	    case 'younger-than':
-            case 'youngerthan':
-                // Return false if the file is older than the file $value, or the files $value
-                $check = function($filename) use ($cacheFile) {
-                    return !file_exists($filename) || filectime($cacheFile) < filectime($filename);
-                };
-
-                if (!is_array($value)) {
-                    if (!$this->isRemote($value) && $check($value)) {
-                        return false;
-                    }
-                } else {
-                    foreach ($value as $file) {
-                        if (!$this->isRemote($file) && $check($file)) {
-                            return false;
-                        }
-                    }
-                }
-		break;
 	    default:
 		throw new \Exception('Cache condition '.$type.' not supported');
 	    }
