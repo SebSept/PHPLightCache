@@ -227,19 +227,16 @@ class Cache
      */
     public function get($cacheId, array $conditions = [])
     {
-        if(!$this->checkValidCacheId($cacheId, false))
-                return NULL;
+        if(!$this->checkValidCacheId($cacheId))
+            return NULL;
         
         $conditions = array_merge($this->conditions, $conditions);
         
-	if ($this->exists($cacheId, $conditions)) 
+    	if($this->exists($cacheId, $conditions)) 
         {
-	    return file_get_contents($this->getCachePath($cacheId));
-	} 
-        else 
-        {
+	       return file_get_contents($this->getCachePath($cacheId));
+        } 
 	    return NULL;
-	}
     }
     
     /**
