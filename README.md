@@ -65,14 +65,12 @@ Installation
 Composer
 --------
 
-NOT YET SUBMITTED TO composer/packagist
-
 Add this to your `composer.json` :
 
 ```json
 {
     "require": {
-        "sebsept/cache": "1.0.*"
+        "sebsept/cache": "dev-master"
     }
 }
 ```
