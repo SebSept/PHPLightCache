@@ -1,5 +1,3 @@
-It's not yet production ready, but will be soon...
-
 Cache
 =====
 
