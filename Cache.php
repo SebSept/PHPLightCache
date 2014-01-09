@@ -219,7 +219,6 @@ class Cache
     /**
      * Get data from the cache
      * 
-     * @todo better throw exception if invalid cacheId ?
      * 
      * @param string $cacheId
      * @param array $conditions Additionnal conditions, overrides defaults @see SebSept\Cache\Cache::$conditions
@@ -261,13 +260,12 @@ class Cache
      * check the $cacheId is valid
      * 
      * @codeCoverageIgnore
-     * @throws Exception if param $throwException && param $cacheId doesn't match self::valid_cache_id_regexp
      * @return bool
      */
-    private function checkValidCacheId($cacheId, $throwException = true)
+    private function checkValidCacheId($cacheId)
     {
         $match = preg_match(self::valid_cache_id_regexp, $cacheId);
-        if($throwException && !$match)
+        if(!$match)
             throw new \Exception('Invalid cache id : must match the regexp '.self::valid_cache_id_regexp);
         return $match;
     }
