@@ -49,7 +49,7 @@ class Cache
     /**
      * @var string regular expression to validate cache ids
      */
-    const valid_cache_id_regexp = '|^[\w\d]{1,255}$|';
+    const CACHEID_VALIDATION_REGEXP = '|^[\w\d]{1,255}$|';
     
     /**
      * Constructs the cache system
@@ -141,12 +141,12 @@ class Cache
      */
     protected function createCacheDir($cachePath)
     {
-        $is_dir = is_dir($cachePath);
+        $isDir = is_dir($cachePath);
         $mkdir = @mkdir( $cachePath, 0775, true );
-        if(isset($_ENV['debug']) && $_ENV['debug'] && !$is_dir && !$mkdir )
+        if(isset($_ENV['debug']) && $_ENV['debug'] && !$isDir && !$mkdir )
             throw new \Exception('Failled to create dir '.$cachePath);
         
-        return $is_dir || $mkdir;
+        return $isDir || $mkdir;
     }
 
     /**
@@ -207,13 +207,13 @@ class Cache
     {
         $this->checkValidCacheId($cacheId);
          
-	$cachePath = $this->getCachePath($cacheId);
-        $create_dir = $this->createCacheDir( dirname($cachePath) );
-        $create_file = ( @file_put_contents($cachePath, $contents) !== false );
-        if(isset($_ENV['debug']) && $_ENV['debug'] && !$create_file)
+        $cachePath = $this->getCachePath($cacheId);
+        $createDir = $this->createCacheDir( dirname($cachePath) );
+        $createFile = ( @file_put_contents($cachePath, $contents) !== false );
+        if(isset($_ENV['debug']) && $_ENV['debug'] && !$createFile)
             throw new \Exception('Failled to create file '.$cachePath);
             
-        return $create_dir && $create_file;
+        return $createDir && $createFile;
     }
 
     /**
@@ -247,12 +247,12 @@ class Cache
      */
     public function delete($cacheId)
     {
-        $file_path = $this->getCachePath($cacheId);
+        $filePath = $this->getCachePath($cacheId);
         // file doesn't exists : return true
-        if(!file_exists($file_path))
+        if(!file_exists($filePath))
             return true;
-        if(!@unlink($file_path))
-            throw new \Exception('Failed to delete existing file '.$file_path);
+        if(!@unlink($filePath))
+            throw new \Exception('Failed to delete existing file '.$filePath);
         return true;
     }
 
@@ -264,9 +264,9 @@ class Cache
      */
     private function checkValidCacheId($cacheId)
     {
-        $match = preg_match(self::valid_cache_id_regexp, $cacheId);
+        $match = preg_match(self::CACHEID_VALIDATION_REGEXP, $cacheId);
         if(!$match)
-            throw new \Exception('Invalid cache id : must match the regexp '.self::valid_cache_id_regexp);
+            throw new \Exception('Invalid cache id : must match the regexp '.self::CACHEID_VALIDATION_REGEXP);
         return $match;
     }
            
