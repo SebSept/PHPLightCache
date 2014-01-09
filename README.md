@@ -26,7 +26,7 @@ Basic
 // include file (using composer)
 require('vendor/autoload.php'); 
 // or directly
-require('./libs/
+require('./libs/PHPLightCacheFS/Cache.php');
 
 // create an instance setting expiration delay (2 hours) and cache dir
 $cache = new \SebSept\Cache(

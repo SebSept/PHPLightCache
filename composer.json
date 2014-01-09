@@ -1,12 +1,15 @@
 {
     "name": "sebsept/cache",
-    "description": "A lightweight file-system cache system",
+    "description": "A lightweight file-system cache library",
+    "type" : "library",
     "keywords": ["cache", "caching", "system", "file-system"],
+    "homepage" : "https://github.com/SebSept/PHPLightCacheFS/",
     "license": "MIT",
     "authors": [
         {
             "name": "Sébastien Monterisi",
-            "email": "sebastienmonterisi@yahoo.fr"
+            "email": "sebastienmonterisi@yahoo.fr",
+            "homepage": "http://seb7.fr"
         },
         {
             "name": "Gregwar",
