@@ -20,12 +20,10 @@ Basic
 ```php
 <?php
 // include file (using composer)
-require('vendor/autoload.php'); 
-// or directly
-require('./libs/PHPLightCacheFS/Cache.php');
+require('vendor/autoload.php');
 
 // create an instance setting expiration delay (2 hours) and cache dir
-$cache = new \SebSept\Cache(
+$cache = new \SebSept\Cache\Cache(
 array(
     'cacheDirectory' => '/tmp/cacheFS',
     'conditions' => array('max-age' => 60*60*2)
@@ -33,7 +31,7 @@ array(
 );
 
 // create a cache
-$cache->set('theCacheId', 'This is some cached content, string'));
+$cache->set('theCacheId', 'This is some cached content, string');
 
 // get cached content
 $content = $cache->get('theCacheId');
@@ -47,22 +45,21 @@ Other methods
 
 ```php
 // check that a cache with id 'theCacheId' exists and is less than an hour
-$cache->exists('theCacheId', array('conditions' => array('max-age' => 60*60'));
+$cache->exists('theCacheId', array('conditions' => array('max-age' => 60*60)));
 
 // full path to file on disk
-$pathToFile = $cache()->getCachePath('theCacheId');
+$pathToFile = $cache->getCachePath('theCacheId');
 
 // path to base dir where cache files are
 $cacheDirPath = $cache->getCacheDirectory();
 ```
 
-```
+```php
 // change path depth
 $cache->setPathDepth(3); // files will be stored in /CacheDir/1/2/3/thecachename
 
 // change cache directory
 $cache->setCacheDirectory('/tmp/newdir'); 
-
 ```
 
 Installation
