@@ -95,16 +95,16 @@ class Cache
     /**
      * Set directories Path max depth
      *
-     * @todo   add min and max constants to validate size value + return bool
-     * @param int $size path max depth
-     *                  @return $this
+     * @param  int $depth path max depth
+     * @return bool
      */
-    public function setPathDepth($size)
+    public function setPathDepth($depth)
     {
-        if (filter_var($size, FILTER_VALIDATE_INT) && $size > 0) {
-            $this->pathDepth = $size;
+        if (filter_var($depth, FILTER_VALIDATE_INT) && $depth > 0) {
+            $this->pathDepth = $depth;
+            return true;
         }
-        return $this;
+        return false;
     }
 
     /**
@@ -210,7 +210,6 @@ class Cache
 
     /**
      * Get data from the cache
-     *
      *
      * @param  string $cacheId
      * @param  array  $conditions Additionnal conditions, overrides defaults {@see SebSept\Cache\Cache::$conditions}
