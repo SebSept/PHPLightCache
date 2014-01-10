@@ -98,4 +98,4 @@ Expiration was not respected, so took a the code ... then decided to recode all.
 License
 =======
 
-Published under [The MIT License (MIT)](./LICENCE).
+Published under [The MIT License (MIT)](./LICENSE).
