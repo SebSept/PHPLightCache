@@ -62,7 +62,6 @@ class Cache
     public function __construct($options = [])
     {
         $this->options = array_merge($this->options, $options);
-
         $this->setCacheDirectory($this->options['cacheDirectory']);
         $this->conditions = $this->options['conditions'];
     }
@@ -78,10 +77,8 @@ class Cache
     {
         if (file_exists($cacheDirectory)) {
             $this->cacheDirectory = $cacheDirectory;
-
             return true;
         }
-
         return false;
     }
 
@@ -107,7 +104,6 @@ class Cache
         if (filter_var($size, FILTER_VALIDATE_INT) && $size > 0) {
             $this->pathDepth = $size;
         }
-
         return $this;
     }
 
@@ -147,7 +143,6 @@ class Cache
         if (isset($_ENV['debug']) && $_ENV['debug'] && !$isDir && !$mkdir) {
             throw new \Exception('Failed to create dir '.$cachePath);
         }
-
         return $isDir || $mkdir;
     }
 
@@ -163,9 +158,7 @@ class Cache
         if (!file_exists($cacheFile)) {
             return false;
         }
-
         $conditions = array_merge($this->conditions, $conditions);
-
         foreach ($conditions as $type => $value) {
             switch ($type) {
                 case 'max-age':
@@ -178,7 +171,6 @@ class Cache
                     throw new \Exception('Cache condition "'.$type.'" not supported');
             }
         }
-
         return true;
     }
 
@@ -193,7 +185,6 @@ class Cache
     {
         $conditions = array_merge($this->conditions, $conditions);
         $cacheFile = $this->getCachePath($cacheId);
-
         return $this->checkConditions($cacheFile, $conditions);
     }
 
@@ -208,14 +199,12 @@ class Cache
     public function set($cacheId, $contents)
     {
         $this->checkValidCacheId($cacheId);
-
         $cachePath = $this->getCachePath($cacheId);
         $createDir = $this->createCacheDir(dirname($cachePath));
         $createFile = ( @file_put_contents($cachePath, $contents) !== false );
         if (isset($_ENV['debug']) && $_ENV['debug'] && !$createFile) {
             throw new \Exception('Failed to create file '.$cachePath);
         }
-
         return $createDir && $createFile;
     }
 
@@ -232,13 +221,10 @@ class Cache
         if (!$this->checkValidCacheId($cacheId)) {
             return null;
         }
-
         $conditions = array_merge($this->conditions, $conditions);
-
         if ($this->exists($cacheId, $conditions)) {
             return file_get_contents($this->getCachePath($cacheId));
         }
-
         return null;
     }
 
@@ -259,7 +245,6 @@ class Cache
         if (!@unlink($filePath)) {
             throw new \Exception('Failed to delete existing file '.$filePath);
         }
-
         return true;
     }
 
@@ -275,7 +260,6 @@ class Cache
         if (!$match) {
             throw new \Exception('Invalid cache id : must match the regexp '.self::CACHEID_VALIDATION_REGEXP);
         }
-
         return $match;
     }
 }
