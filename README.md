@@ -14,8 +14,6 @@ Features
 Usage
 =====
 
-Sample here are not tested!
-
 Basic
 -----
 
@@ -48,14 +46,22 @@ Other methods
 -------------
 
 ```php
+// check that a cache with id 'theCacheId' exists and is less than an hour
+$cache->exists('theCacheId', array('conditions' => array('max-age' => 60*60'));
 
+// full path to file on disk
+$pathToFile = $cache()->getCachePath('theCacheId');
+
+// path to base dir where cache files are
+$cacheDirPath = $cache->getCacheDirectory();
 ```
 
-Advanced usage
---------------
+```
+// change path depth
+$cache->setPathDepth(3); // files will be stored in /CacheDir/1/2/3/thecachename
 
-
-```php
+// change cache directory
+$cache->setCacheDirectory('/tmp/newdir'); 
 
 ```
 
@@ -93,7 +99,7 @@ History
 
 This is a fork of https://github.com/Gregwar/Cache . 
 I found and install Gregwar/Cache from composer but found a bug :
-Expiration was not respected, so took a the code ... then decided to recode all.
+Expiration was not respected, so took a look at the code ... then decided to recode it all.
 
 License
 =======
