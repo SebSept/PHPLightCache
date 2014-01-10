@@ -35,16 +35,20 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $_ENV['debug'] = false;
 
         // create cache dir if doesn't exists
-        if (!is_dir(self::CACHEDIR)) {
-            $nd = self::CACHEDIR;
+        $nd = self::CACHEDIR;
+        if (!is_dir($nd)) {
             `mkdir $nd`;
         }
+        // make it writable
+        `chmod +w $nd`;
 
         // same for EXISTINGDIR
-        if (!is_dir(self::EXISTINGDIR)) {
-            $nd = self::EXISTINGDIR;
+        $nd = self::EXISTINGDIR;
+        if (!is_dir($nd)) {
             `mkdir $nd`;
         }
+        // make it writable
+        `chmod +w $nd`;
 
         // Creates cache object
         $this->cache = new Cache( array('cacheDirectory' => self::CACHEDIR) );
@@ -103,10 +107,22 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers SebSept\Cache\Cache::setCacheDirectory
+     * @expectedException Exception
+     */
+    public function testSetCacheDirectory_onExistingNonWritableDir()
+    {
+        $dir = self::EXISTINGDIR;
+        `chmod -w $dir`;
+        $this->cache->setCacheDirectory(self::EXISTINGDIR);
+    }
+    
+    /**
+     * @covers SebSept\Cache\Cache::setCacheDirectory
+     * @expectedException Exception
      */
     public function testSetCacheDirectory_onNonExistingDir()
     {
-        $this->assertFalse($this->cache->setCacheDirectory(self::NONEXISTINGDIR));
+        $this->cache->setCacheDirectory(self::NONEXISTINGDIR);
     }
 
     /**
@@ -135,16 +151,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getCacheDirectory
-     * dir must not be changed, equals to default
-     */
-    public function testGetCacheDirectory_onChangedNonExisting()
-    {
-        $this->cache->setCacheDirectory(self::NONEXISTINGDIR);
-        $this->assertEquals(self::CACHEDIR, $this->cache->getCacheDirectory());
-    }
-
-    /**
      * @covers SebSept\Cache\Cache::set
      * @covers SebSept\Cache\Cache::createCacheDir
      * @covers SebSept\Cache\Cache::checkValidCacheId
@@ -164,17 +170,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testSet_onCacheIdWithSpecialChars()
     {
         $this->cache->set('?././*y..ac?eid','thecontent!');
-    }
-
-    /**
-     * @covers SebSept\Cache\Cache::set
-     * @covers SebSept\Cache\Cache::createCacheDir
-     * @covers SebSept\Cache\Cache::checkValidCacheId
-     */
-    public function testSet_onNotWritableCacheDir()
-    {
-        $this->cache->setCacheDirectory(self::NONWRITABLEDIR);
-        $this->assertFalse($this->cache->set('mycacheid','thecontent'));
     }
 
     /**
@@ -278,7 +273,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testConstuctor_onConfigPassed_condition()
     {
         // initial_conditions : no cache
-        $initial_conditions = array('conditions' => array( 'max-age' => 0) );
+        $initial_conditions = array('conditions' => array( 'max-age' => 0), 'cacheDirectory' => self::CACHEDIR );
         $cache = new Cache($initial_conditions);
         $cache->set('testing', 'onConfigPassed_condition');
         $this->assertFalse($cache->exists('testing'));
@@ -337,7 +332,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         // remove cache dir created in test
-        $cd = $this->cache->getCacheDirectory('acache');
+        $cd = $this->cache->getCacheDirectory();
         `chmod +w $cd -R`;
         `rm -Rf $cd`;
     }

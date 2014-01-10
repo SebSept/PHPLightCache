@@ -67,23 +67,26 @@ class Cache
     }
 
     /**
-     * Sets the cache directory (if exists)
+     * Set the cache directory (if exists)
      *
-     * @todo also check that dir is writable (?)
+     * @throws Exception Cache directory not existing or not writable
      * @param  string $cacheDirectory the cache directory. Without ending '/'
      * @return bool
      */
     public function setCacheDirectory($cacheDirectory)
     {
-        if (file_exists($cacheDirectory)) {
-            $this->cacheDirectory = $cacheDirectory;
-            return true;
+        if (!file_exists($cacheDirectory)) {
+            throw new \Exception('Cache directory "'.$cacheDirectory.'" doesn\'t exists');
         }
-        return false;
+        if (!is_writable($cacheDirectory)) {
+            throw new \Exception('Cache directory "'.$cacheDirectory.'" not writable');
+        }
+        $this->cacheDirectory = $cacheDirectory;
+        return true;
     }
 
     /**
-     * Gets the cache directory
+     * Get the cache directory
      *
      * @return string the cache directory
      */
@@ -108,7 +111,7 @@ class Cache
     }
 
     /**
-     * Gets the cache file path
+     * Get the cache file path
      *
      * @param  string $cacheId cache file name
      * @return string path to cache file
