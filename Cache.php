@@ -61,14 +61,14 @@ class Cache
     {
         $this->options = array_merge($this->options, $options);
         $this->setDirectoryPath($this->options['directoryPath']);
-        $this->delay = (int)$this->options['delay'];
+        $this->delay = (int) $this->options['delay'];
     }
 
     /**
      * Set the cache directory (if exists)
      *
      * @throws Exception Cache directory not existing or not writable
-     * @param  string $directoryPath the cache directory. Without ending '/'
+     * @param  string    $directoryPath the cache directory. Without ending '/'
      * @return bool
      */
     public function setDirectoryPath($directoryPath)
@@ -80,6 +80,7 @@ class Cache
             throw new \Exception('Cache directory "'.$directoryPath.'" not writable');
         }
         $this->directoryPath = $directoryPath;
+
         return true;
     }
 
@@ -96,15 +97,17 @@ class Cache
     /**
      * Set directories Path max depth
      *
-     * @param  int $depth path max depth
+     * @param  int  $depth path max depth
      * @return bool
      */
     public function setPathDepth($depth)
     {
         if (filter_var($depth, FILTER_VALIDATE_INT) && $depth > 0) {
             $this->pathDepth = $depth;
+
             return true;
         }
+
         return false;
     }
 
@@ -144,14 +147,15 @@ class Cache
         if (isset($_ENV['debug']) && $_ENV['debug'] && !$isDir && !$mkdir) {
             throw new \Exception('Failed to create dir '.$cachePath);
         }
+
         return $isDir || $mkdir;
     }
 
     /**
      * Cache is expired ?
      *
-     * @param  string  $cacheFile  the cache file to check
-     * @param  int     $delay, overrides current delay if set
+     * @param  string $cacheFile the cache file to check
+     * @param  int    $delay,    overrides current delay if set
      * @return bool
      */
     protected function isExpired($cacheFile, $delay = null)
@@ -159,25 +163,27 @@ class Cache
         if (!file_exists($cacheFile)) {
             return false;
         }
-        $delay = is_null($delay) ? $this->delay : (int)$delay;
+        $delay = is_null($delay) ? $this->delay : (int) $delay;
         $age = time() - filectime($cacheFile);
         if ($age >= $delay) {
             return false;
         }
+
         return true;
     }
 
     /**
      * Checks if cacheID exists with param delay or default delay
      *
-     * @param  string          $cacheId
-     * @param  mixed null|int  $delay 
+     * @param  string         $cacheId
+     * @param  mixed null|int $delay
      * @return bool
      */
     public function exists($cacheId, $delay = null)
     {
-        $delay = is_null($delay) ? $this->delay : (int)$delay;
+        $delay = is_null($delay) ? $this->delay : (int) $delay;
         $cacheFile = $this->getCachePath($cacheId);
+
         return $this->isExpired($cacheFile, $delay);
     }
 
@@ -198,6 +204,7 @@ class Cache
         if (isset($_ENV['debug']) && $_ENV['debug'] && !$createFile) {
             throw new \Exception('Failed to create file '.$cachePath);
         }
+
         return $createDir && $createFile;
     }
 
@@ -205,7 +212,7 @@ class Cache
      * Get data from the cache
      *
      * @param  string $cacheId
-     * @param  int    $delay overrides defaults {@see SebSept\Cache\Cache::$delay}
+     * @param  int    $delay   overrides defaults {@see SebSept\Cache\Cache::$delay}
      * @return mixed  string|null null if cache doesn't exists in this conditions, string if exists
      */
     public function get($cacheId, $delay = null)
@@ -213,10 +220,11 @@ class Cache
         if (!$this->checkValidCacheId($cacheId)) {
             return null;
         }
-        $delay = is_null($delay) ? $this->delay : (int)$delay;
+        $delay = is_null($delay) ? $this->delay : (int) $delay;
         if ($this->exists($cacheId, $delay)) {
             return file_get_contents($this->getCachePath($cacheId));
         }
+
         return null;
     }
 
@@ -237,6 +245,7 @@ class Cache
         if (!@unlink($filePath)) {
             throw new \Exception('Failed to delete existing file '.$filePath);
         }
+
         return true;
     }
 
@@ -252,6 +261,7 @@ class Cache
         if (!$match) {
             throw new \Exception('Invalid cache id : must match the regexp '.self::CACHEID_VALIDATION_REGEXP);
         }
+
         return $match;
     }
 }

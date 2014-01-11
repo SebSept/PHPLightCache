@@ -116,7 +116,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         `chmod -w $dir`;
         $this->cache->setDirectoryPath(self::EXISTINGDIR);
     }
-    
+
     /**
      * @covers SebSept\Cache\Cache::setDirectoryPath
      * @expectedException Exception
