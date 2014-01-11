@@ -1,11 +1,10 @@
 <?php
 /**
- * PHPLightCacheFS
+ * PHPLightCache
  * Lightweight file cache provider
  *
  * @author  Sébastien Monterisi (main author) <sebastienmonterisi@yahoo.fr>
- * @author  Gregwar <g.passault@gmail.com>
- * @link    https://github.com/SebSept/PHPLightCacheFS
+ * @link    https://github.com/SebSept/PHPLightCache
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
 

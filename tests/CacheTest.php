@@ -1,10 +1,10 @@
 <?php
 /**
- * PHPLightCacheFS Unit tests
+ * PHPLightCache Unit tests
  * Lightweight file cache provider
  *
  * @author  Sébastien Monterisi (main author) <sebastienmonterisi@yahoo.fr>
- * @link    https://github.com/SebSept/PHPLightCacheFS
+ * @link    https://github.com/SebSept/PHPLightCache
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
 namespace SebSept\Cache;

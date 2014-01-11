@@ -3,7 +3,7 @@
     "description": "A lightweight file-system cache library",
     "type" : "library",
     "keywords": ["cache", "caching", "system", "file-system"],
-    "homepage" : "https://github.com/SebSept/PHPLightCacheFS/",
+    "homepage" : "https://github.com/SebSept/PHPLightCache/",
     "license": "MIT",
     "authors": [
         {

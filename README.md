@@ -84,14 +84,14 @@ Git
 ---
 
 ```bash
-git clone https://github.com/SebSept/PHPLightCacheFS.git
+git clone https://github.com/SebSept/PHPLightCache.git
 ```
 
 Direct download
 ---------------
 
-* [Download .zip](https://github.com/SebSept/PHPLightCacheFS/archive/master.zip)
-* [Download .tar.gz](https://github.com/SebSept/PHPLightCacheFS/archive/master.tar.gz)
+* [Download .zip](https://github.com/SebSept/PHPLightCache/archive/master.zip)
+* [Download .tar.gz](https://github.com/SebSept/PHPLightCache/archive/master.tar.gz)
 
 History
 =======
