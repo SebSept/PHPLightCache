@@ -11,7 +11,7 @@ Features
 - Lightweight (~8Kb)
 - Simple to use (see API)
 - 100% Unit tested
-- Define expiration when retrieving content ( not when creating the cache )
+- Optionnaly define expiration delay when retrieving content ( not when creating the cache )
 
 Usage
 =====
