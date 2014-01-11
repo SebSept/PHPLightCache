@@ -70,39 +70,39 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getCachePath
+     * @covers SebSept\Cache\Cache::getFilePath
      * @covers SebSept\Cache\Cache::setPathDepth
      * Default depth supposed to be 5
      */
-    public function testGetCachePath_onDepthDefault()
+    public function testgetFilePath_onDepthDefault()
     {
         $this->AssertEquals(self::CACHEDIR.'/m/y/t/e/s/mytestfilecache' ,
-                $this->cache->getCachePath('mytestfilecache')
+                $this->cache->getFilePath('mytestfilecache')
                 );
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getCachePath
+     * @covers SebSept\Cache\Cache::getFilePath
      * @covers SebSept\Cache\Cache::setPathDepth
      */
-    public function testGetCachePath_onDepth3()
+    public function testgetFilePath_onDepth3()
     {
         $this->cache->setPathDepth(3);
         $this->AssertEquals(self::CACHEDIR.'/m/y/t/mytestfilecache' ,
-                $this->cache->getCachePath('mytestfilecache')
+                $this->cache->getFilePath('mytestfilecache')
                 );
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getCachePath
+     * @covers SebSept\Cache\Cache::getFilePath
      * @covers SebSept\Cache\Cache::setPathDepth
      * Default depth will be default, 5
      */
-    public function testGetCachePath_onDepthInvalid()
+    public function testgetFilePath_onDepthInvalid()
     {
         $this->cache->setPathDepth('stupid val');
         $this->AssertEquals(self::CACHEDIR.'/m/y/t/e/s/mytestfilecache' ,
-                $this->cache->getCachePath('mytestfilecache')
+                $this->cache->getFilePath('mytestfilecache')
                 );
     }
 
@@ -302,7 +302,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $this->cache->set('acache', 'testDelete_onExistingCache_Removable');
         // prevent file from being deletable by changing last dir rights
-        $dir = dirname($this->cache->getCachePath('acache'));
+        $dir = dirname($this->cache->getFilePath('acache'));
         `chmod -w $dir`;
 
         $this->cache->delete('acache');

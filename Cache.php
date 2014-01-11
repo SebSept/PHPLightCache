@@ -117,7 +117,7 @@ class Cache
      * @param  string $cacheId cache file name
      * @return string path to cache file
      */
-    public function getCachePath($cacheId)
+    public function getFilePath($cacheId)
     {
         $this->checkValidCacheId($cacheId);
         $path = array();
@@ -182,7 +182,7 @@ class Cache
     public function exists($cacheId, $delay = null)
     {
         $delay = is_null($delay) ? $this->delay : (int) $delay;
-        $cacheFile = $this->getCachePath($cacheId);
+        $cacheFile = $this->getFilePath($cacheId);
 
         return $this->isExpired($cacheFile, $delay);
     }
@@ -198,7 +198,7 @@ class Cache
     public function set($cacheId, $contents)
     {
         $this->checkValidCacheId($cacheId);
-        $cachePath = $this->getCachePath($cacheId);
+        $cachePath = $this->getFilePath($cacheId);
         $createDir = $this->createCacheDir(dirname($cachePath));
         $createFile = ( @file_put_contents($cachePath, $contents) !== false );
         if (isset($_ENV['debug']) && $_ENV['debug'] && !$createFile) {
@@ -222,7 +222,7 @@ class Cache
         }
         $delay = is_null($delay) ? $this->delay : (int) $delay;
         if ($this->exists($cacheId, $delay)) {
-            return file_get_contents($this->getCachePath($cacheId));
+            return file_get_contents($this->getFilePath($cacheId));
         }
 
         return null;
@@ -237,7 +237,7 @@ class Cache
      */
     public function delete($cacheId)
     {
-        $filePath = $this->getCachePath($cacheId);
+        $filePath = $this->getFilePath($cacheId);
         // file doesn't exists : return true
         if (!file_exists($filePath)) {
             return true;

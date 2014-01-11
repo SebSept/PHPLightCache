@@ -50,7 +50,7 @@ Other methods
 $cache->exists('theCacheId', array('delay' => 60*60));
 
 // full path to file on disk
-$pathToFile = $cache->getCachePath('theCacheId');
+$pathToFile = $cache->getFilePath('theCacheId');
 
 // path to base dir where cache files are
 $cacheDirPath = $cache->getDirectoryPath();
