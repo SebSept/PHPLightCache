@@ -27,7 +27,7 @@ require('vendor/autoload.php');
 // create an instance setting expiration delay (2 hours) and cache dir
 $cache = new \SebSept\Cache\Cache(
 array(
-    'cacheDirectory' => '/tmp/cacheFS',
+    'directoryPath' => '/tmp/cacheFS',
     'delay' => 60*60*2
 )
 );

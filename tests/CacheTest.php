@@ -52,7 +52,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         `chmod +w $nd`;
 
         // Creates cache object
-        $this->cache = new Cache( array('cacheDirectory' => self::CACHEDIR) );
+        $this->cache = new Cache( array('directoryPath' => self::CACHEDIR) );
 
         // Checks 'testing' is not existing
         if ($this->cache->exists('testing')) {
@@ -264,7 +264,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testConstuctor_onConfigPassed_delay()
     {
         // config : no cache
-        $initialConfig = array('delay' => 0, 'cacheDirectory' => self::CACHEDIR );
+        $initialConfig = array('delay' => 0, 'directoryPath' => self::CACHEDIR );
         $cache = new Cache($initialConfig);
         $cache->set('testing', 'testConstuctor_onConfigPassed_delay');
         $this->assertFalse($cache->exists('testing'));
@@ -278,7 +278,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testConstuctor_onConfigPassed_cachedir()
     {
         // change cache dir
-        $initialConfig = array('cacheDirectory' => self::EXISTINGDIR );
+        $initialConfig = array('directoryPath' => self::EXISTINGDIR );
         $cache = new Cache($initialConfig);
         $this->assertEquals(self::EXISTINGDIR, $cache->getDirectoryPath());
     }

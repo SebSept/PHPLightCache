@@ -16,7 +16,7 @@ class Cache
      * Cache directory
      * @var string where is the cache dir - absolute path - must exist
      */
-    protected $cacheDirectory;
+    protected $directoryPath;
 
     /**
      * directories max depth
@@ -32,7 +32,7 @@ class Cache
      * default configuration options
      * @var array
      */
-    protected $options = ['cacheDirectory' => 'cache',
+    protected $options = ['directoryPath' => 'cache',
                           'delay' => 86400 ];
 
     /**
@@ -51,16 +51,16 @@ class Cache
     /**
      * Constructs the cache system
      *
-     * Options param can be 'cacheDirectory' (string)
+     * Options param can be 'directoryPath' (string)
      * and 'delay' {@see SebSept\Cache\Cache::$delay}
      *
      * @todo better doc
-     * @param array $options 'cacheDirectory', 'delay'
+     * @param array $options 'directoryPath', 'delay'
      */
     public function __construct($options = [])
     {
         $this->options = array_merge($this->options, $options);
-        $this->setCacheDirectory($this->options['cacheDirectory']);
+        $this->setCacheDirectory($this->options['directoryPath']);
         $this->delay = (int)$this->options['delay'];
     }
 
@@ -68,18 +68,18 @@ class Cache
      * Set the cache directory (if exists)
      *
      * @throws Exception Cache directory not existing or not writable
-     * @param  string $cacheDirectory the cache directory. Without ending '/'
+     * @param  string $directoryPath the cache directory. Without ending '/'
      * @return bool
      */
-    public function setCacheDirectory($cacheDirectory)
+    public function setCacheDirectory($directoryPath)
     {
-        if (!file_exists($cacheDirectory)) {
-            throw new \Exception('Cache directory "'.$cacheDirectory.'" doesn\'t exists');
+        if (!file_exists($directoryPath)) {
+            throw new \Exception('Cache directory "'.$directoryPath.'" doesn\'t exists');
         }
-        if (!is_writable($cacheDirectory)) {
-            throw new \Exception('Cache directory "'.$cacheDirectory.'" not writable');
+        if (!is_writable($directoryPath)) {
+            throw new \Exception('Cache directory "'.$directoryPath.'" not writable');
         }
-        $this->cacheDirectory = $cacheDirectory;
+        $this->directoryPath = $directoryPath;
         return true;
     }
 
@@ -90,7 +90,7 @@ class Cache
      */
     public function getDirectoryPath()
     {
-        return $this->cacheDirectory;
+        return $this->directoryPath;
     }
 
     /**
