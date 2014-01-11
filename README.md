@@ -53,7 +53,7 @@ $cache->exists('theCacheId', array('delay' => 60*60));
 $pathToFile = $cache->getCachePath('theCacheId');
 
 // path to base dir where cache files are
-$cacheDirPath = $cache->getCacheDirectory();
+$cacheDirPath = $cache->getDirectoryPath();
 ```
 
 ```php

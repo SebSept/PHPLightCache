@@ -135,20 +135,20 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getCacheDirectory
+     * @covers SebSept\Cache\Cache::getDirectoryPath
      */
-    public function testGetCacheDirectory_onDefault()
+    public function testgetDirectoryPath_onDefault()
     {
-        $this->assertEquals( self::CACHEDIR , $this->cache->getCacheDirectory());
+        $this->assertEquals( self::CACHEDIR , $this->cache->getDirectoryPath());
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getCacheDirectory
+     * @covers SebSept\Cache\Cache::getDirectoryPath
      */
-    public function testGetCacheDirectory_onChangedExisting()
+    public function testgetDirectoryPath_onChangedExisting()
     {
         $this->cache->setCacheDirectory(self::EXISTINGDIR);
-        $this->assertEquals(self::EXISTINGDIR, $this->cache->getCacheDirectory());
+        $this->assertEquals(self::EXISTINGDIR, $this->cache->getDirectoryPath());
     }
 
     /**
@@ -280,7 +280,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         // change cache dir
         $initialConfig = array('cacheDirectory' => self::EXISTINGDIR );
         $cache = new Cache($initialConfig);
-        $this->assertEquals(self::EXISTINGDIR, $cache->getCacheDirectory());
+        $this->assertEquals(self::EXISTINGDIR, $cache->getDirectoryPath());
     }
 
     /**
@@ -323,7 +323,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         // remove cache dir created in test
-        $cd = $this->cache->getCacheDirectory();
+        $cd = $this->cache->getDirectoryPath();
         `chmod +w $cd -R`;
         `rm -Rf $cd`;
     }

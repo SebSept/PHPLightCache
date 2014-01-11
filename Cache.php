@@ -88,7 +88,7 @@ class Cache
      *
      * @return string the cache directory
      */
-    public function getCacheDirectory()
+    public function getDirectoryPath()
     {
         return $this->cacheDirectory;
     }
@@ -128,7 +128,7 @@ class Cache
             trigger_error('Path : '.$path);
         }
 
-        return $this->getCacheDirectory() . '/' . $path;
+        return $this->getDirectoryPath() . '/' . $path;
     }
 
     /**
