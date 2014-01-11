@@ -34,16 +34,15 @@ class Cache
      * @var array
      */
     protected $options = ['cacheDirectory' => 'cache',
-                          'conditions' => ['max-age' => 86400] ];
+                          'delay' => 86400 ];
 
     /**
-     * cache conditions
+     * cache delay
      *
-     * keys can be only 'max-age'
-     * will be overrided in __construct with $options['conditions']
-     * @var array associative array
+     * will be overrided in __construct with $options['delay']
+     * @var int delay in seconds, time to live, time to consider cache valid. Defaults to 86400 = 60*60*24 : 24 hours
      */
-    protected $conditions = [];
+    protected $delay = [];
 
     /**
      * @var string regular expression to validate cache ids
@@ -54,16 +53,16 @@ class Cache
      * Constructs the cache system
      *
      * Options param can be 'cacheDirectory' (string)
-     * and 'conditions' {@see SebSept\Cache\Cache::$conditions}
+     * and 'delay' {@see SebSept\Cache\Cache::$delay}
      *
      * @todo better doc
-     * @param array $options 'cacheDirectory', 'conditions'
+     * @param array $options 'cacheDirectory', 'delay'
      */
     public function __construct($options = [])
     {
         $this->options = array_merge($this->options, $options);
         $this->setCacheDirectory($this->options['cacheDirectory']);
-        $this->conditions = $this->options['conditions'];
+        $this->delay = (int)$this->options['delay'];
     }
 
     /**
@@ -150,45 +149,37 @@ class Cache
     }
 
     /**
-     * Checks that the cache conditions are respected
+     * Cache is expired ?
      *
-     * @param  string $cacheFile  the cache file to check
-     * @param  array  $conditions an array of conditions to check, overrides current conditions
+     * @param  string  $cacheFile  the cache file to check
+     * @param  int     $delay, overrides current delay if set
      * @return bool
      */
-    protected function checkConditions($cacheFile, array $conditions = [])
+    protected function isExpired($cacheFile, $delay = null)
     {
         if (!file_exists($cacheFile)) {
             return false;
         }
-        $conditions = array_merge($this->conditions, $conditions);
-        foreach ($conditions as $type => $value) {
-            switch ($type) {
-                case 'max-age':
-                    $age = time() - filectime($cacheFile);
-                    if ($age >= $value) {
-                        return false;
-                    }
-                    break;
-                default:
-                    throw new \Exception('Cache condition "'.$type.'" not supported');
-            }
+        $delay = is_null($delay) ? $this->delay : (int)$delay;
+        $age = time() - filectime($cacheFile);
+        if ($age >= $delay) {
+            return false;
         }
         return true;
     }
 
     /**
-     * Checks if cacheID exists in conditions param
+     * Checks if cacheID exists with param delay or default delay
      *
-     * @param  string $cacheId
-     * @param  array  $conditions
+     * @param  string          $cacheId
+     * @param  mixed null|int  $delay 
      * @return bool
      */
-    public function exists($cacheId, array $conditions = [])
+    public function exists($cacheId, $delay = null)
     {
-        $conditions = array_merge($this->conditions, $conditions);
+        $delay = is_null($delay) ? $this->delay : (int)$delay;
         $cacheFile = $this->getCachePath($cacheId);
-        return $this->checkConditions($cacheFile, $conditions);
+        return $this->isExpired($cacheFile, $delay);
     }
 
     /**
@@ -215,16 +206,16 @@ class Cache
      * Get data from the cache
      *
      * @param  string $cacheId
-     * @param  array  $conditions Additionnal conditions, overrides defaults {@see SebSept\Cache\Cache::$conditions}
+     * @param  int    $delay overrides defaults {@see SebSept\Cache\Cache::$delay}
      * @return mixed  string|null null if cache doesn't exists in this conditions, string if exists
      */
-    public function get($cacheId, array $conditions = [])
+    public function get($cacheId, $delay = null)
     {
         if (!$this->checkValidCacheId($cacheId)) {
             return null;
         }
-        $conditions = array_merge($this->conditions, $conditions);
-        if ($this->exists($cacheId, $conditions)) {
+        $delay = is_null($delay) ? $this->delay : (int)$delay;
+        if ($this->exists($cacheId, $delay)) {
             return file_get_contents($this->getCachePath($cacheId));
         }
         return null;

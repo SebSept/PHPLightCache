@@ -1,13 +1,14 @@
 <?php
-
-namespace SebSept\Cache;
-
 /**
- * Unit tests for SebSept\Cache
+ * PHPLightCacheFS Unit tests
+ * Lightweight file cache provider
  *
- * @author Sébastien Monterisi <SebSept@github> - almost all code is now from this author
+ * @author  Sébastien Monterisi (main author) <sebastienmonterisi@yahoo.fr>
+ * @link    https://github.com/SebSept/PHPLightCacheFS
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
+namespace SebSept\Cache;
+
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
     const CACHEDIR = '/tmp/cacheTests';
@@ -173,73 +174,64 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::checkConditions
      */
-    public function testExits_onNoCondition()
+    public function testExits_onDefaultDelay()
     {
-        $this->cache->set('testing', 'testExits_onNoCondition');
+        $this->cache->set('testing', 'testExits_onNoDelay');
         $this->assertTrue($this->cache->exists('testing'));
-    }
-
-    /**
-     * @covers SebSept\Cache\Cache::exists
-     * Data should be cached
-     */
-    public function testExits_onMaxAgeValid()
-    {
-        $conditions = array('max-age' => 60); // 60 seconds
-
-        $this->cache->set('testing', 'testExits_onMaxAgeValid');
-        $this->assertTrue($this->cache->exists('testing', $conditions));
-    }
-
-    /**
-     * @covers SebSept\Cache\Cache::exists
-     * Cache expired
-     */
-    public function testExits_onMaxAgeExpired()
-    {
-        $conditions = array('max-age' => 1); // 1 second
-
-        $this->cache->set('testing', 'testExits_onMaxAgeExpired');
-        sleep(2);
-        $this->assertFalse($this->cache->exists('testing', $conditions));
-    }
-
-    /**
-     * @covers SebSept\Cache\Cache::exists
-     * Cache expired - -1 second
-     */
-    public function testExits_onMaxAgeAlwaysExpired()
-    {
-        $conditions = array('max-age' => -1);
-
-        $this->cache->set('testing', 'testExits_onMaxAgeAlwaysExpired');
-        $this->assertFalse($this->cache->exists('testing', $conditions));
-    }
-
-    /**
-     * @covers SebSept\Cache\Cache::exists
-     * Cache expired - 0 second
-     * 0 second proprably means 'no cache'
-     */
-    public function testExits_onMaxAgeZero()
-    {
-        $conditions = array('max-age' => 0);
-
-        $this->cache->set('testing', 'testExits_onMaxAgeZero');
-        $this->assertFalse($this->cache->exists('testing', $conditions));
     }
 
     /**
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
      * @covers SebSept\Cache\Cache::checkConditions
+     * Data should be cached
      */
-    public function testGet_onDefined()
+    public function testExits_onValidDelay()
     {
-        $this->cache->set('testing', 'testGet_onDefined');
-        $this->assertEquals('testGet_onDefined', $this->cache->get('testing'));
+        $this->cache->set('testing', 'testExits_onValidDelay');
+        $this->assertTrue($this->cache->exists('testing', 60));
+    }
+
+    /**
+     * @covers SebSept\Cache\Cache::get
+     * @covers SebSept\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::checkConditions
+     * Cache expired
+     */
+    public function testExits_onExpiredDelay()
+    {
+        $this->cache->set('testing', 'testExits_onExpiredDelay');
+        sleep(2);
+        $this->assertFalse($this->cache->exists('testing', 1));
+    }
+
+    /**
+     * @covers SebSept\Cache\Cache::get
+     * @covers SebSept\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::checkConditions
+     * Cache expired - -1 second
+     */
+    public function testExits_onDelayIsNegative()
+    {
+        $this->cache->set('testing', 'testExits_onDelayIsNegative');
+        $this->assertFalse($this->cache->exists('testing', -1));
+    }
+
+    /**
+     * @covers SebSept\Cache\Cache::get
+     * @covers SebSept\Cache\Cache::exists
+     * @covers SebSept\Cache\Cache::checkConditions
+     * Cache expired - 0 second
+     * 0 second proprably means 'no cache'
+     */
+    public function testExits_onDelayIsZero()
+    {
+        $this->cache->set('testing', 'testExits_onDelayIsZero');
+        $this->assertFalse($this->cache->exists('testing', 0));
     }
 
    /**
@@ -247,7 +239,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers SebSept\Cache\Cache::exists
      * @covers SebSept\Cache\Cache::checkConditions
      */
-    public function testGet_onUndefined()
+    public function testGet_onUndefinedCacheId()
     {
         $this->assertNull( $this->cache->get('undefined'));
     }
@@ -256,39 +248,38 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
      * @covers SebSept\Cache\Cache::checkConditions
-     * Condition make the cache expired, must return NULL
+     * Delay make the cache expired, must return NULL
      */
-    public function testGet_onDefined_withConditions()
+    public function testGet_onDefinedCacheId_withDelay()
     {
-        $this->cache->set('testing', 'testGet_onDefined_withConditions');
-        $conditions = array('max-age' => 0);
-        $this->assertNull( $this->cache->get('testing', $conditions) );
+        $this->cache->set('testing', 'testGet_onDefinedCacheId_withDelay');
+        $this->assertNull( $this->cache->get('testing', 0) );
     }
 
     /**
-     * Check if configuration passed on constuctor is respected : condition max-age
+     * Check if configuration passed on constuctor is respected : delay
      * @covers SebSept\Cache\Cache::__construct()
-     * because of max-age:0 passed in constructor, cache must be considered expired
+     * because of delay:0 passed in constructor, cache must be considered expired
      */
-    public function testConstuctor_onConfigPassed_condition()
+    public function testConstuctor_onConfigPassed_delay()
     {
-        // initial_conditions : no cache
-        $initial_conditions = array('conditions' => array( 'max-age' => 0), 'cacheDirectory' => self::CACHEDIR );
-        $cache = new Cache($initial_conditions);
-        $cache->set('testing', 'onConfigPassed_condition');
+        // config : no cache
+        $initialConfig = array('delay' => 0, 'cacheDirectory' => self::CACHEDIR );
+        $cache = new Cache($initialConfig);
+        $cache->set('testing', 'testConstuctor_onConfigPassed_delay');
         $this->assertFalse($cache->exists('testing'));
     }
 
     /**
      * Check if configuration passed on constuctor is respected : cachedir
      * @covers SebSept\Cache\Cache::__construct()
-     * because of max-age:0 passed in constructor, cache must be considered expired
+     * because of delay:0 passed in constructor, cache must be considered expired
      */
     public function testConstuctor_onConfigPassed_cachedir()
     {
         // change cache dir
-        $initial_conditions = array('cacheDirectory' => self::EXISTINGDIR );
-        $cache = new Cache($initial_conditions);
+        $initialConfig = array('cacheDirectory' => self::EXISTINGDIR );
+        $cache = new Cache($initialConfig);
         $this->assertEquals(self::EXISTINGDIR, $cache->getCacheDirectory());
     }
 

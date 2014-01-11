@@ -3,6 +3,8 @@ Cache
 
 This is a lightweight file cache system. 
 
+Currently in beta stage, do not yet use it on production !
+
 Features
 ========
 
@@ -26,7 +28,7 @@ require('vendor/autoload.php');
 $cache = new \SebSept\Cache\Cache(
 array(
     'cacheDirectory' => '/tmp/cacheFS',
-    'conditions' => array('max-age' => 60*60*2)
+    'delay' => 60*60*2
 )
 );
 
@@ -45,7 +47,7 @@ Other methods
 
 ```php
 // check that a cache with id 'theCacheId' exists and is less than an hour
-$cache->exists('theCacheId', array('conditions' => array('max-age' => 60*60)));
+$cache->exists('theCacheId', array('delay' => 60*60));
 
 // full path to file on disk
 $pathToFile = $cache->getCachePath('theCacheId');
