@@ -7,7 +7,8 @@
  * @link    https://github.com/SebSept/PHPLightCache
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
-namespace SebSept\Cache;
+namespace SebSept\Cache\tests;
+use SebSept\Cache\Cache;
 
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
@@ -53,7 +54,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
         // Creates cache object
         $this->cache = new Cache( array('directoryPath' => self::CACHEDIR) );
-
         // Checks 'testing' is not existing
         if ($this->cache->exists('testing')) {
             $cd = self::CACHEDIR;
