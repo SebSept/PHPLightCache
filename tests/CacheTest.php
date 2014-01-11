@@ -176,7 +176,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::isExpired
      */
     public function testExits_onDefaultDelay()
     {
@@ -187,7 +187,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::isExpired
      * Data should be cached
      */
     public function testExits_onValidDelay()
@@ -199,7 +199,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::isExpired
      * Cache expired
      */
     public function testExits_onExpiredDelay()
@@ -212,7 +212,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::isExpired
      * Cache expired - -1 second
      */
     public function testExits_onDelayIsNegative()
@@ -224,7 +224,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::isExpired
      * Cache expired - 0 second
      * 0 second proprably means 'no cache'
      */
@@ -237,7 +237,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
    /**
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::isExpired
      */
     public function testGet_onUndefinedCacheId()
     {
@@ -247,7 +247,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers SebSept\Cache\Cache::get
      * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::checkConditions
+     * @covers SebSept\Cache\Cache::isExpired
      * Delay make the cache expired, must return NULL
      */
     public function testGet_onDefinedCacheId_withDelay()
