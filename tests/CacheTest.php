@@ -107,31 +107,31 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::setCacheDirectory
+     * @covers SebSept\Cache\Cache::setDirectoryPath
      * @expectedException Exception
      */
-    public function testSetCacheDirectory_onExistingNonWritableDir()
+    public function testsetDirectoryPath_onExistingNonWritableDir()
     {
         $dir = self::EXISTINGDIR;
         `chmod -w $dir`;
-        $this->cache->setCacheDirectory(self::EXISTINGDIR);
+        $this->cache->setDirectoryPath(self::EXISTINGDIR);
     }
     
     /**
-     * @covers SebSept\Cache\Cache::setCacheDirectory
+     * @covers SebSept\Cache\Cache::setDirectoryPath
      * @expectedException Exception
      */
-    public function testSetCacheDirectory_onNonExistingDir()
+    public function testsetDirectoryPath_onNonExistingDir()
     {
-        $this->cache->setCacheDirectory(self::NONEXISTINGDIR);
+        $this->cache->setDirectoryPath(self::NONEXISTINGDIR);
     }
 
     /**
-     * @covers SebSept\Cache\Cache::setCacheDirectory
+     * @covers SebSept\Cache\Cache::setDirectoryPath
      */
-    public function testSetCacheDirectory_onExistingDir()
+    public function testsetDirectoryPath_onExistingDir()
     {
-        $this->assertTrue($this->cache->setCacheDirectory(self::EXISTINGDIR));
+        $this->assertTrue($this->cache->setDirectoryPath(self::EXISTINGDIR));
     }
 
     /**
@@ -147,7 +147,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testgetDirectoryPath_onChangedExisting()
     {
-        $this->cache->setCacheDirectory(self::EXISTINGDIR);
+        $this->cache->setDirectoryPath(self::EXISTINGDIR);
         $this->assertEquals(self::EXISTINGDIR, $this->cache->getDirectoryPath());
     }
 

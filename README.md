@@ -61,7 +61,7 @@ $cacheDirPath = $cache->getDirectoryPath();
 $cache->setPathDepth(3); // files will be stored in /CacheDir/1/2/3/thecachename
 
 // change cache directory
-$cache->setCacheDirectory('/tmp/newdir'); 
+$cache->setDirectoryPath('/tmp/newdir'); 
 ```
 
 Installation

@@ -60,7 +60,7 @@ class Cache
     public function __construct($options = [])
     {
         $this->options = array_merge($this->options, $options);
-        $this->setCacheDirectory($this->options['directoryPath']);
+        $this->setDirectoryPath($this->options['directoryPath']);
         $this->delay = (int)$this->options['delay'];
     }
 
@@ -71,7 +71,7 @@ class Cache
      * @param  string $directoryPath the cache directory. Without ending '/'
      * @return bool
      */
-    public function setCacheDirectory($directoryPath)
+    public function setDirectoryPath($directoryPath)
     {
         if (!file_exists($directoryPath)) {
             throw new \Exception('Cache directory "'.$directoryPath.'" doesn\'t exists');
