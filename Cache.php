@@ -253,7 +253,7 @@ class Cache
      * SetDelay
      *
      * Set expiration delay.
-     * Return true if param value is an int, false otherwise
+     * Return true if param value is an int or string castable to int
      *
      * @param  int  $delay
      * @return bool
@@ -262,7 +262,7 @@ class Cache
     {
         $this->delay = (int) $delay;
 
-        return ($this->delay === $delay);
+        return ( (string) $this->delay === (string) $delay);
     }
 
     /**

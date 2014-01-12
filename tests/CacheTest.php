@@ -335,7 +335,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetDelay_onParamIsInt()
     {
-        $this->assertTrue($this->cache->setDelay(12));
+        $this->assertTrue($this->cache->setDelay(0));
     }
 
     /**
@@ -343,7 +343,15 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetDelay_onParamIsString()
     {
-        $this->assertFalse($this->cache->setDelay('12'));
+        $this->assertTrue($this->cache->setDelay('12'));
+    }
+
+    /**
+     * @covers SebSept\SimpleFileCache\Cache::setDelay
+     */
+    public function testSetDelay_onParamIsInvalidString()
+    {
+        $this->assertFalse($this->cache->setDelay('sdmfk'));
     }
 
     /**
