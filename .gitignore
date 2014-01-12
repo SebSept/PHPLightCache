@@ -1,2 +1,8 @@
+/package.json
+; nodejs / gruntjs
+/Gruntfile.js
+/node_modules/
+
+; ide
 /nbproject/
 **.swp
