@@ -16,10 +16,10 @@
             "email": "g.passault@gmail.com"
         }
     ],
-    "target-dir": "SebSept/PHPLightCache",
+    "target-dir": "SebSept/SimpleFileCache",
     "autoload": {
         "psr-0": {
-            "SebSept\\PHPLightCache": ""
+            "SebSept\\SimpleFileCache": ""
         }
     }
 }
