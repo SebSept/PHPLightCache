@@ -25,7 +25,7 @@ Basic
 require('vendor/autoload.php');
 
 // create an instance setting expiration delay (2 hours) and cache dir
-$cache = new \SebSept\Cache\Cache(
+$cache = new \SebSept\SimpleFileCache\Cache(
 array(
     'directoryPath' => '/tmp/cacheFS',
     'delay' => 60*60*2
@@ -84,14 +84,14 @@ Git
 ---
 
 ```bash
-git clone https://github.com/SebSept/PHPLightCache.git
+git clone https://github.com/SebSept/SimpleFileCache.git
 ```
 
 Direct download
 ---------------
 
-* [Download .zip](https://github.com/SebSept/PHPLightCache/archive/master.zip)
-* [Download .tar.gz](https://github.com/SebSept/PHPLightCache/archive/master.tar.gz)
+* [Download .zip](https://github.com/SebSept/SimpleFileCache/archive/master.zip)
+* [Download .tar.gz](https://github.com/SebSept/SimpleFileCache/archive/master.tar.gz)
 
 History
 =======

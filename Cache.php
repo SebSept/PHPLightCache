@@ -1,14 +1,14 @@
 <?php
 /**
- * PHPLightCache
+ * SimpleFileCache
  * Lightweight file cache provider
  *
  * @author  Sébastien Monterisi (main author) <sebastienmonterisi@yahoo.fr>
- * @link    https://github.com/SebSept/PHPLightCache
+ * @link    https://github.com/SebSept/SimpleFileCache
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
 
-namespace SebSept\Cache;
+namespace SebSept\SimpleFileCache;
 
 class Cache
 {
@@ -52,7 +52,7 @@ class Cache
      * Constructs the cache system
      *
      * Options param can be 'directoryPath' (string)
-     * and 'delay' {@see SebSept\Cache\Cache::$delay}
+     * and 'delay' {@see SebSept\SimpleFileCache\Cache::$delay}
      *
      * @todo better doc
      * @param array $options 'directoryPath', 'delay'
@@ -212,7 +212,7 @@ class Cache
      * Get data from the cache
      *
      * @param  string $cacheId
-     * @param  int    $delay   overrides defaults {@see SebSept\Cache\Cache::$delay}
+     * @param  int    $delay   overrides defaults {@see SebSept\SimpleFileCache\Cache::$delay}
      * @return mixed  string|null null if cache doesn't exists in this conditions, string if exists
      */
     public function get($cacheId, $delay = null)

@@ -2,8 +2,8 @@
     "name": "sebsept/cache",
     "description": "A lightweight file-system cache library",
     "type" : "library",
-    "keywords": ["cache", "caching", "system", "file-system"],
-    "homepage" : "https://github.com/SebSept/PHPLightCache/",
+    "keywords": ["cache", "caching", "simple", "file-system"],
+    "homepage" : "https://github.com/SebSept/SimpleFileCache/",
     "license": "MIT",
     "authors": [
         {
@@ -16,10 +16,10 @@
             "email": "g.passault@gmail.com"
         }
     ],
-    "target-dir": "SebSept/Cache",
+    "target-dir": "SebSept/PHPLightCache",
     "autoload": {
         "psr-0": {
-            "SebSept\\Cache": ""
+            "SebSept\\PHPLightCache": ""
         }
     }
 }

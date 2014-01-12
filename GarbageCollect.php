@@ -1,6 +1,6 @@
 <?php
 
-namespace SebSept\Cache;
+namespace SebSept\SimpleFileCache;
 
 /**
  * Garbage collect a directory, this will crawl a directory, lookng

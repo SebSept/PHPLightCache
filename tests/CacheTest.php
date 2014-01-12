@@ -1,14 +1,14 @@
 <?php
 /**
- * PHPLightCache Unit tests
+ * SimpleFileCache Unit tests
  * Lightweight file cache provider
  *
  * @author  Sébastien Monterisi (main author) <sebastienmonterisi@yahoo.fr>
- * @link    https://github.com/SebSept/PHPLightCache
+ * @link    https://github.com/SebSept/SimpleFileCache
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
-namespace SebSept\Cache\tests;
-use SebSept\Cache\Cache;
+namespace SebSept\SimpleFileCache\tests;
+use SebSept\SimpleFileCache\Cache;
 
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
@@ -70,8 +70,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getFilePath
-     * @covers SebSept\Cache\Cache::setPathDepth
+     * @covers SebSept\SimpleFileCache\Cache::getFilePath
+     * @covers SebSept\SimpleFileCache\Cache::setPathDepth
      * Default depth supposed to be 5
      */
     public function testgetFilePath_onDepthDefault()
@@ -82,8 +82,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getFilePath
-     * @covers SebSept\Cache\Cache::setPathDepth
+     * @covers SebSept\SimpleFileCache\Cache::getFilePath
+     * @covers SebSept\SimpleFileCache\Cache::setPathDepth
      */
     public function testgetFilePath_onDepth3()
     {
@@ -94,8 +94,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getFilePath
-     * @covers SebSept\Cache\Cache::setPathDepth
+     * @covers SebSept\SimpleFileCache\Cache::getFilePath
+     * @covers SebSept\SimpleFileCache\Cache::setPathDepth
      * Default depth will be default, 5
      */
     public function testgetFilePath_onDepthInvalid()
@@ -107,7 +107,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::setDirectoryPath
+     * @covers SebSept\SimpleFileCache\Cache::setDirectoryPath
      * @expectedException Exception
      */
     public function testsetDirectoryPath_onExistingNonWritableDir()
@@ -118,7 +118,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::setDirectoryPath
+     * @covers SebSept\SimpleFileCache\Cache::setDirectoryPath
      * @expectedException Exception
      */
     public function testsetDirectoryPath_onNonExistingDir()
@@ -127,7 +127,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::setDirectoryPath
+     * @covers SebSept\SimpleFileCache\Cache::setDirectoryPath
      */
     public function testsetDirectoryPath_onExistingDir()
     {
@@ -135,7 +135,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getDirectoryPath
+     * @covers SebSept\SimpleFileCache\Cache::getDirectoryPath
      */
     public function testgetDirectoryPath_onDefault()
     {
@@ -143,7 +143,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::getDirectoryPath
+     * @covers SebSept\SimpleFileCache\Cache::getDirectoryPath
      */
     public function testgetDirectoryPath_onChangedExisting()
     {
@@ -152,9 +152,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::set
-     * @covers SebSept\Cache\Cache::createCacheDir
-     * @covers SebSept\Cache\Cache::checkValidCacheId
+     * @covers SebSept\SimpleFileCache\Cache::set
+     * @covers SebSept\SimpleFileCache\Cache::createCacheDir
+     * @covers SebSept\SimpleFileCache\Cache::checkValidCacheId
      */
     public function testSet_onWritableCacheDir()
     {
@@ -162,9 +162,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::set
-     * @covers SebSept\Cache\Cache::createCacheDir
-     * @covers SebSept\Cache\Cache::checkValidCacheId
+     * @covers SebSept\SimpleFileCache\Cache::set
+     * @covers SebSept\SimpleFileCache\Cache::createCacheDir
+     * @covers SebSept\SimpleFileCache\Cache::checkValidCacheId
      * @expectedException Exception
      * Must throw on exception if chars others than alpha and digits
      */
@@ -174,9 +174,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::get
-     * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::isExpired
+     * @covers SebSept\SimpleFileCache\Cache::get
+     * @covers SebSept\SimpleFileCache\Cache::exists
+     * @covers SebSept\SimpleFileCache\Cache::isExpired
      */
     public function testExits_onDefaultDelay()
     {
@@ -185,9 +185,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::get
-     * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::isExpired
+     * @covers SebSept\SimpleFileCache\Cache::get
+     * @covers SebSept\SimpleFileCache\Cache::exists
+     * @covers SebSept\SimpleFileCache\Cache::isExpired
      * Data should be cached
      */
     public function testExits_onValidDelay()
@@ -197,9 +197,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::get
-     * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::isExpired
+     * @covers SebSept\SimpleFileCache\Cache::get
+     * @covers SebSept\SimpleFileCache\Cache::exists
+     * @covers SebSept\SimpleFileCache\Cache::isExpired
      * Cache expired
      */
     public function testExits_onExpiredDelay()
@@ -210,9 +210,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::get
-     * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::isExpired
+     * @covers SebSept\SimpleFileCache\Cache::get
+     * @covers SebSept\SimpleFileCache\Cache::exists
+     * @covers SebSept\SimpleFileCache\Cache::isExpired
      * Cache expired - -1 second
      */
     public function testExits_onDelayIsNegative()
@@ -222,9 +222,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::get
-     * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::isExpired
+     * @covers SebSept\SimpleFileCache\Cache::get
+     * @covers SebSept\SimpleFileCache\Cache::exists
+     * @covers SebSept\SimpleFileCache\Cache::isExpired
      * Cache expired - 0 second
      * 0 second proprably means 'no cache'
      */
@@ -235,9 +235,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
    /**
-     * @covers SebSept\Cache\Cache::get
-     * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::isExpired
+     * @covers SebSept\SimpleFileCache\Cache::get
+     * @covers SebSept\SimpleFileCache\Cache::exists
+     * @covers SebSept\SimpleFileCache\Cache::isExpired
      */
     public function testGet_onUndefinedCacheId()
     {
@@ -245,9 +245,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::get
-     * @covers SebSept\Cache\Cache::exists
-     * @covers SebSept\Cache\Cache::isExpired
+     * @covers SebSept\SimpleFileCache\Cache::get
+     * @covers SebSept\SimpleFileCache\Cache::exists
+     * @covers SebSept\SimpleFileCache\Cache::isExpired
      * Delay make the cache expired, must return NULL
      */
     public function testGet_onDefinedCacheId_withDelay()
@@ -258,7 +258,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Check if configuration passed on constuctor is respected : delay
-     * @covers SebSept\Cache\Cache::__construct()
+     * @covers SebSept\SimpleFileCache\Cache::__construct()
      * because of delay:0 passed in constructor, cache must be considered expired
      */
     public function testConstuctor_onConfigPassed_delay()
@@ -272,7 +272,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Check if configuration passed on constuctor is respected : cachedir
-     * @covers SebSept\Cache\Cache::__construct()
+     * @covers SebSept\SimpleFileCache\Cache::__construct()
      * because of delay:0 passed in constructor, cache must be considered expired
      */
     public function testConstuctor_onConfigPassed_cachedir()
@@ -284,7 +284,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::delete
+     * @covers SebSept\SimpleFileCache\Cache::delete
      */
     public function testDelete_onExistingCache_Removable()
     {
@@ -294,7 +294,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::delete
+     * @covers SebSept\SimpleFileCache\Cache::delete
      * @expectedException Exception
      * Exception if failed to delete cache
      */
@@ -309,7 +309,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebSept\Cache\Cache::delete
+     * @covers SebSept\SimpleFileCache\Cache::delete
      * returns true on non existing cache
      */
     public function testDelete_onNonExistingCache()
