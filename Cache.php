@@ -250,6 +250,22 @@ class Cache
     }
 
     /**
+     * SetDelay
+     *
+     * Set expiration delay.
+     * Return true if param value is an int, false otherwise
+     *
+     * @param  int  $delay
+     * @return bool
+     */
+    public function setDelay($delay)
+    {
+        $this->delay = (int) $delay;
+
+        return ($this->delay === $delay);
+    }
+
+    /**
      * check the $cacheId is valid
      *
      * @codeCoverageIgnore

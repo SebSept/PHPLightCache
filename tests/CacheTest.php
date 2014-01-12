@@ -318,6 +318,35 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers SebSept\SimpleFileCache\Cache::setDelay
+     * SetDelay sets delay
+     * delay set to 0 so get() must return null
+     */
+    public function testSetDelay()
+    {
+        $this->cache->set('testing', 'testSetDelay');
+        $this->cache->setDelay(0);
+        $this->assertNull($this->cache->get('testing'));
+    }
+
+    /**
+     * @covers SebSept\SimpleFileCache\Cache::setDelay
+     * delay set to 0 so get() must return null
+     */
+    public function testSetDelay_onParamIsInt()
+    {
+        $this->assertTrue($this->cache->setDelay(12));
+    }
+
+    /**
+     * @covers SebSept\SimpleFileCache\Cache::setDelay
+     */
+    public function testSetDelay_onParamIsString()
+    {
+        $this->assertFalse($this->cache->setDelay('12'));
+    }
+
+    /**
      * executed after each test to clear environnement
      */
     protected function tearDown()
