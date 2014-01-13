@@ -355,6 +355,40 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers SebSept\SimpleFileCache\Cache::flush
+     * cache deleted after flush()
+     */
+    public function testFlush()
+    {
+        $this->cache->set('testing', 'testFlush');
+        $filePath = $this->cache->getFilePath('testing');
+        $this->assertEquals('testFlush',$this->cache->get('testing'), 'Failled to run test, file must exists before testing flush()');
+        $this->cache->flush();
+        $this->assertNull($this->cache->get('testing'));
+    }
+    
+    /**
+     * @covers SebSept\SimpleFileCache\Cache::flush
+     * flush() return true on success
+     */
+    public function testFlush_onSuccess()
+    {
+        $this->assertTrue($this->cache->flush());
+    }
+    
+    /**
+     * @covers SebSept\SimpleFileCache\Cache::flush
+     * @expectedException Exception
+     * flush() throw exception if failled to delete subdirs
+     */
+    public function testFlush_onFaillure()
+    {
+        $dir = $this->cache->getDirectoryPath();
+        `chmod -w $dir`;
+        $this->cache->flush();
+    }
+    
+    /**
      * executed after each test to clear environnement
      */
     protected function tearDown()
