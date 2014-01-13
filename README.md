@@ -1,9 +1,7 @@
 Cache
 =====
 
-This is a lightweight file cache system. 
-
-Currently in beta stage, do not yet use it on production !
+This is a light weight file cache component for php. 
 
 Features
 ========
