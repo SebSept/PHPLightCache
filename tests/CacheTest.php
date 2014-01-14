@@ -12,7 +12,8 @@ use SebSept\SimpleFileCache\Cache;
 
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
-    const CACHEDIR = '/tmp/cacheTests';
+    const CACHEDIRROOT = '/tmp/cacheRoot';
+    const CACHEDIR = '/tmp/cacheRoot/cacheTests';
     const NONEXISTINGDIR = '/dev/null/doenstexist';
     const EXISTINGDIR = '/tmp/another';
     const NONWRITABLEDIR = '/tmp/nonWritable';
@@ -36,21 +37,14 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         // set env debug mode - set to true only to find problem
         $_ENV['debug'] = false;
 
-        // create cache dir if doesn't exists
-        $nd = self::CACHEDIR;
-        if (!is_dir($nd)) {
-            `mkdir $nd`;
-        }
-        // make it writable
-        `chmod +w $nd`;
-
-        // same for EXISTINGDIR
-        $nd = self::EXISTINGDIR;
-        if (!is_dir($nd)) {
-            `mkdir $nd`;
-        }
-        // make it writable
-        `chmod +w $nd`;
+        // create test directories
+        $this->prepareDirectory(self::CACHEDIRROOT);
+        $this->prepareDirectory(self::CACHEDIR);
+        $this->prepareDirectory(self::EXISTINGDIR);
+        // create a non writable dir
+        $nwd = self::NONWRITABLEDIR;
+        $this->prepareDirectory($nwd);
+        `chmod 555 $nwd`;
 
         // Creates cache object
         $this->cache = new Cache( array('directoryPath' => self::CACHEDIR) );
@@ -60,13 +54,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
             `rm -Rf $cd/*`;
         }
         $this->assertFalse($this->cache->exists('testing'));
-
-        // create a non writable dir
-        $nwd = self::NONWRITABLEDIR;
-        if (!is_dir(self::NONWRITABLEDIR)) {
-            `mkdir $nwd`;
-        }
-        `chmod 555 $nwd`;
     }
 
     /**
@@ -384,7 +371,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testFlush_onFaillure()
     {
         $dir = $this->cache->getDirectoryPath();
-        `chmod -w $dir`;
+        `chmod -w $dir/../`;
         $this->cache->flush();
     }
     
@@ -393,10 +380,35 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        // remove cache dir created in test
-        $cd = $this->cache->getDirectoryPath();
-        `chmod +w $cd -R`;
-        `rm -Rf $cd`;
+        $this->removeDirectory(self::CACHEDIRROOT);
+//        $this->prepareDirectory(self::CACHEDIR);
+        $this->removeDirectory(self::EXISTINGDIR);
+        $this->removeDirectory(self::NONWRITABLEDIR);
+    }
+    
+    /**
+     * Remove cache dir created in test
+     * @param string $dir
+     */
+    protected function removeDirectory($dir)
+    {
+        `chmod +w $dir -R`;
+        `rm -Rf $dir`;
+    }
+    
+    /**
+     * Create directory for tests
+     * 
+     * @param string $dir new directory path
+     * @return void
+     */
+    protected function prepareDirectory($dir)
+    {
+        if (!is_dir($dir)) {
+            `mkdir $dir`;
+        }
+        // make it writable
+        `chmod +w $dir`;
     }
 
 }

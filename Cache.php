@@ -266,6 +266,24 @@ class Cache
     }
 
     /**
+     * Flush all caches
+     *
+     * Remove than recreate the cache directory
+     *
+     * @return bool
+     * @throws \Exception on failed to remove cache directory
+     */
+    public function flush()
+    {
+        $cacheDir = $this->getDirectoryPath();
+        $delete = `rm -Rf $cacheDir 2>&1`;
+        if(!is_null($delete))
+            throw new \Exception ("Failed to flush cache dir '$cacheDir' : '$delete'");
+
+        return $this->createCacheDir($cacheDir);
+    }
+
+    /**
      * check the $cacheId is valid
      *
      * @codeCoverageIgnore
