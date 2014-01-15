@@ -3,7 +3,7 @@
  * SimpleFileCache Unit tests
  * Lightweight file cache provider
  *
- * @author  Sébastien Monterisi (main author) <sebastienmonterisi@yahoo.fr>
+ * @author  Sébastien Monterisi <sebastienmonterisi@yahoo.fr>
  * @link    https://github.com/SebSept/SimpleFileCache
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
@@ -270,6 +270,20 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::EXISTINGDIR, $cache->getDirectoryPath());
     }
 
+    /**
+     * Check if configuration passed on constuctor is respected : pathDepth
+     * @covers SebSept\SimpleFileCache\Cache::__construct()
+     */
+    public function testConstuctor_onConfigPassed_pathDepth()
+    {
+        // change cache dir
+        $initialConfig = array('pathDepth' => 3, 'directoryPath' => self::CACHEDIR );
+        $cache = new Cache($initialConfig);
+        $this->AssertEquals(self::CACHEDIR.'/m/y/t/mytestfilecache' ,
+                $cache->getFilePath('mytestfilecache')
+                );
+    }
+    
     /**
      * @covers SebSept\SimpleFileCache\Cache::delete
      */
