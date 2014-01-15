@@ -22,11 +22,16 @@ Basic
 // include file (using composer)
 require('vendor/autoload.php');
 
-// create an instance setting expiration delay (2 hours) and cache dir
+// create an instance of Cache() with default params
+$cache = new \SebSept\SimpleFileCache\Cache();
+
+// create an instance, setting expiration delay (2 hours) 
+// and cache dir and cache dir depth
 $cache = new \SebSept\SimpleFileCache\Cache(
 array(
     'directoryPath' => '/tmp/cacheFS',
-    'delay' => 60*60*2
+    'delay' => 60*60*2, 
+    'pathDepth' => 2
 )
 );
 
@@ -35,6 +40,10 @@ $cache->set('theCacheId', 'This is some cached content, string');
 
 // get cached content
 $content = $cache->get('theCacheId');
+
+// get cached content not older than 120 secondes
+$content = $cache->get('theCacheId', 120); // content is null if cache expired or not existing
+
 
 // delete a cache
 $cache->delete('theCacheId');
