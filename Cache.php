@@ -38,10 +38,10 @@ class Cache
     /**
      * cache delay
      *
-     * will be overrided in __construct with $options['delay']
+     * set in __construct with $options['delay']
      * @var int delay in seconds, time to live, time to consider cache valid. Defaults to 86400 = 60*60*24 : 24 hours
      */
-    protected $delay = [];
+    protected $delay;
 
     /**
      * @var string regular expression to validate cache ids
