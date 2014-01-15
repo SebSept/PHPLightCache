@@ -310,7 +310,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
                 $cache->getFilePath('mytestfilecache')
                 );
     }
-    
+
     /**
      * @covers SebSept\SimpleFileCache\Cache::delete
      */
@@ -394,7 +394,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->cache->flush();
         $this->assertNull($this->cache->get('testing'));
     }
-    
+
     /**
      * @covers SebSept\SimpleFileCache\Cache::flush
      * flush() return true on success
@@ -403,7 +403,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->cache->flush());
     }
-    
+
     /**
      * @covers SebSept\SimpleFileCache\Cache::flush
      * @expectedException Exception
@@ -415,7 +415,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         `chmod -w $dir/../`;
         $this->cache->flush();
     }
-    
+
     /**
      * executed after each test to clear environnement
      */
@@ -426,7 +426,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->removeDirectory(self::EXISTINGDIR);
         $this->removeDirectory(self::NONWRITABLEDIR);
     }
-    
+
     /**
      * Remove cache dir created in test
      * @param string $dir
@@ -436,11 +436,11 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         `chmod +w $dir -R`;
         `rm -Rf $dir`;
     }
-    
+
     /**
      * Create directory for tests
-     * 
-     * @param string $dir new directory path
+     *
+     * @param  string $dir new directory path
      * @return void
      */
     protected function prepareDirectory($dir)
