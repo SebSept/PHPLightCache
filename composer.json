@@ -10,10 +10,6 @@
             "name": "Sébastien Monterisi",
             "email": "sebastienmonterisi@yahoo.fr",
             "homepage": "http://seb7.fr"
-        },
-        {
-            "name": "Gregwar",
-            "email": "g.passault@gmail.com"
         }
     ],
     "target-dir": "SebSept/SimpleFileCache",
