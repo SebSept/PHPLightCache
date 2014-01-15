@@ -21,19 +21,21 @@ class Cache
     /**
      * directories max depth
      *
+     * set in  __construct with $options['pathDepth']
      * For instance, if the file is helloworld.txt and the depth size is
      * 5, the cache file will be: h/e/l/l/o/helloworld.txt
      *
      * @var int $pathDepth directories max depth
      */
-    protected $pathDepth = 5;
+    protected $pathDepth;
 
     /**
      * default configuration options
      * @var array
      */
     protected $options = ['directoryPath' => 'cache',
-                          'delay' => 86400 ];
+                          'delay' => 86400,
+                          'pathDepth' => 5];
 
     /**
      * cache delay
@@ -60,8 +62,10 @@ class Cache
     public function __construct($options = [])
     {
         $this->options = array_merge($this->options, $options);
+
         $this->setDirectoryPath($this->options['directoryPath']);
         $this->delay = (int) $this->options['delay'];
+        $this->setPathDepth($this->options['pathDepth']);
     }
 
     /**
