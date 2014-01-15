@@ -57,9 +57,36 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers SebSept\SimpleFileCache\Cache::setPathDepth
+     * valid path depth
+     */
+    public function testSetPathDepth_onValid()
+    {
+        $this->assertTrue($this->cache->setPathDepth(4));
+    }
+
+        /**
+     * @covers SebSept\SimpleFileCache\Cache::setPathDepth
+     * valid path depth
+     */
+    public function testSetPathDepth_onInvalid_tooLow()
+    {
+        $this->assertFalse($this->cache->setPathDepth(-1));
+    }
+
+        /**
+     * @covers SebSept\SimpleFileCache\Cache::setPathDepth
+     * valid path depth
+     */
+    public function testSetPathDepth_onInvalid_tooHigh()
+    {
+        $this->assertFalse($this->cache->setPathDepth(50));
+    }
+
+    /**
      * @covers SebSept\SimpleFileCache\Cache::getFilePath
      * @covers SebSept\SimpleFileCache\Cache::setPathDepth
-     * Default depth supposed to be 5
+     * Default depth (5)
      */
     public function testgetFilePath_onDepthDefault()
     {

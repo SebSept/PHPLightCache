@@ -51,6 +51,16 @@ class Cache
     const CACHEID_VALIDATION_REGEXP = '|^[\w\d]{1,255}$|';
 
     /**
+     * @var int directory path minimal depth
+     */
+    const DEPTH_MIN = 0;
+
+     /**
+     * @var int directory path minimal depth
+     */
+    const DEPTH_MAX = 12;
+
+    /**
      * Constructs the cache system
      *
      * Options param can be 'directoryPath' (string)
@@ -106,7 +116,9 @@ class Cache
      */
     public function setPathDepth($depth)
     {
-        if (filter_var($depth, FILTER_VALIDATE_INT) && $depth > 0) {
+        if (filter_var($depth, FILTER_VALIDATE_INT)
+                && $depth >= self::DEPTH_MIN
+                && $depth <= self::DEPTH_MAX) {
             $this->pathDepth = $depth;
 
             return true;
